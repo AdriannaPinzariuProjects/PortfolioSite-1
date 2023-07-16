@@ -144,17 +144,18 @@ function Home() {
           }
           return (
             <Box
-              key={isEnterPressed ? i : `planet-${i}`} // Dynamic key for other planets
-              as="div"
-              animation={isEnterPressed ? `${moveDirection} 1s ease-in-out ${(planetDetails.length - Math.abs(selectedPlanetIndex - i)) * 0.15}s forwards` : ''}
-            >
-              <Planet 
-                size={planetSizes[i]} 
-                planetInfo={planet} 
-                isSelected={selectedPlanet === planet.name} 
-                setSelected={setSelectedPlanet} 
-              />
-            </Box>
+    key={isEnterPressed ? i : `planet-${i}`} 
+    as="div"
+    animation={isEnterPressed ? `${moveDirection} 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${(planetDetails.length - Math.abs(selectedPlanetIndex - i)) * 0.1}s forwards` : ''}
+    style={{ willChange: 'transform, opacity' }}
+  >
+    <Planet 
+      size={planetSizes[i]} 
+      planetInfo={planet} 
+      isSelected={selectedPlanet === planet.name} 
+      setSelected={setSelectedPlanet} 
+    />
+  </Box>
           )
         })}
       </Flex>
