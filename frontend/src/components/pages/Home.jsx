@@ -6,14 +6,16 @@ import Footer from '../Footer';
 import { keyframes } from '@emotion/react';
 
 const moveRightAnimation = keyframes`
-  from { transform: translateX(0); }
-  to { transform: translateX(100vw); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(100vw, 0, 1000px); }
 `;
 
 const moveLeftAnimation = keyframes`
-  from { transform: translateX(0); }
-  to { transform: translateX(-100vw); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-100vw, 0, 1000px); }
 `;
+
+
 
 function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
     const borderSize = isSun ? '0.05px' : '0.05px';
@@ -120,7 +122,7 @@ function Home() {
   return (
     <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
-      <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%' mr='10%'>
+      <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%' mr='10%' style={{ perspective: '1000px' }}>
         {planetDetails.map((planet, i) => {
           const selectedPlanetIndex = planetDetails.findIndex(p => p.name === selectedPlanet);
           const moveDirection = i < selectedPlanetIndex ? moveLeftAnimation : moveRightAnimation;
