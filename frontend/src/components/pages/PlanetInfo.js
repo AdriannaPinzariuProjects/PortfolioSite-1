@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom'; 
-import { Box, useColorModeValue, Flex, Text } from '@chakra-ui/react';
+import { Box, Stack, useColorModeValue, Flex, Text } from '@chakra-ui/react';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import planetDetails from './PlanetDetails';
@@ -48,15 +48,26 @@ const PlanetInfo = () => {
             </Box>
           </Flex>
           <Box bg="black" flex="0.4">
-            <Flex justifyContent="space-around" w="100%" color="white">
-                <Text className="opensans-light">1</Text>
-                <Text className="opensans-light">2</Text>
-                <Text className="opensans-light">3</Text>
+            <Flex justifyContent="space-around" alignItems="center" w="100%" color="white" h="100%">
+                <Stack spacing={1}>
+                <Text className="opensans-extralight" fontSize="1vw" textTransform="uppercase"> ONE WAY LIGHT TIME TO SUN MINS</Text>
+<Text className="opensans-light">44.909316</Text>
+
+                </Stack>
+                <Stack spacing={1}>
+                  <Text className="opensans-extralight" fontSize="1vw" textTransform="uppercase">DISTANCE TO SUN MILES</Text>
+                  <Text className="opensans-light" >502,314,9307</Text>
+                </Stack>
+                <Stack spacing={1}>
+                  <Text className="opensans-extralight" fontSize="1vw" textTransform="uppercase">LENGTH OF YEAR</Text>
+                  <Text className="opensans-light" >4,333 Earth days</Text>
+                </Stack>
             </Flex>
           </Box> 
           <Footer flex="0.1"/>
         </Flex>
       </Box>
+
     );
 };
 
