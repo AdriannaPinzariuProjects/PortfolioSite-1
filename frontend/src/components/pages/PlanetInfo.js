@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom'; 
 import { Box, Stack, useColorModeValue, Flex, Text } from '@chakra-ui/react';
 import AnimatedNumber from "animated-number-react";
@@ -12,24 +12,7 @@ import backgroundImage from '../../Assets/testPlanet1.jpg';
 const PlanetInfo = () => {
     const { planetName } = useParams(); 
     const planet = planetDetails.find(p => p.name === planetName);
-
-    const [distanceToSun, setDistanceToSun] = useState(5023149120);
-    const [lightTimeToSun, setLightTimeToSun] = useState(43.810231);
-    const [lengthOfYear, setLengthOfYear] = useState(4301);
-
-    useEffect(() => {
-        const timer1 = setTimeout(() => setLightTimeToSun(44.909316), 1000);
-        const timer2 = setTimeout(() => setDistanceToSun(5023149307), 1000);
-        const timer3 = setTimeout(() => setLengthOfYear(4333), 1000);
-
-        // cleanup function
-        return () => {
-            clearTimeout(timer1);
-            clearTimeout(timer2);
-            clearTimeout(timer3);
-        };
-    }, []);
-
+    
 
     const bgImage = {
         backgroundImage: `url(${backgroundImage})`,
@@ -73,20 +56,20 @@ const PlanetInfo = () => {
                 <Stack spacing={1}>
                   <Text className="opensans-extralight" fontSize=".85vw" textTransform="uppercase">ONE WAY LIGHT TIME TO SUN MINS</Text>
                   <Text className="opensans-light" >
-                    <AnimatedNumber value={lightTimeToSun} duration={3000} formatValue={n => n.toFixed(6)} />
+                    <AnimatedNumber start={43.810231} value={44.909316} duration={3000} formatValue={n => n.toFixed(6)} />
                   </Text>
                 </Stack>
                 <Stack spacing={1}>
                   <Text className="opensans-extralight" fontSize=".85vw" textTransform="uppercase">DISTANCE TO SUN MILES</Text>
                   <Text className="opensans-light">
-                    <AnimatedNumber value={distanceToSun} duration={3000} formatValue={n => Math.floor(n).toLocaleString()} />
+                    <AnimatedNumber start={5023149120} value={5023149307} duration={3000} formatValue={n => Math.floor(n).toLocaleString()} />
                   </Text>
                 </Stack>
                 <Stack spacing={1}>
                   <Text className="opensans-extralight" fontSize=".85vw" textTransform="uppercase">LENGTH OF YEAR</Text>
                   <Flex alignItems="center">
                   <Text className="opensans-light"  >
-                    <AnimatedNumber value={lengthOfYear} duration={3000} formatValue={n => Math.floor(n).toLocaleString()} />
+                    <AnimatedNumber start={4301} value={4333} duration={3000} formatValue={n => Math.floor(n).toLocaleString()} />
                     {" Earth days"}
                     </Text>
                     </Flex>
@@ -98,6 +81,6 @@ const PlanetInfo = () => {
         </Flex>
       </Box>
     );
-}
+};
 
 export default PlanetInfo;
