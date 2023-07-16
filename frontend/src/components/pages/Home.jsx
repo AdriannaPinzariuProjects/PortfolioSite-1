@@ -6,14 +6,16 @@ import Footer from '../Footer';
 import { keyframes } from '@emotion/react';
 
 const moveRightAnimation = keyframes`
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(100vw, 0, 1000px) scale(3); }
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  100% { transform: translate3d(100vw, 0, 1000px) scale(3); opacity: 0; }
 `;
 
 const moveLeftAnimation = keyframes`
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(-100vw, 0, 1000px) scale(3); }
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  100% { transform: translate3d(-100vw, 0, 1000px) scale(3); opacity: 0; }
 `;
+
+
 
 
 
@@ -144,17 +146,17 @@ function Home() {
           }
           return (
             <Box
-    key={isEnterPressed ? i : `planet-${i}`} 
-    as="div"
-    animation={isEnterPressed ? `${moveDirection} 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${(planetDetails.length - Math.abs(selectedPlanetIndex - i)) * 0.1}s forwards` : ''}
-    style={{ willChange: 'transform, opacity' }}
-  >
-    <Planet 
-      size={planetSizes[i]} 
-      planetInfo={planet} 
-      isSelected={selectedPlanet === planet.name} 
-      setSelected={setSelectedPlanet} 
-    />
+  key={isEnterPressed ? i : `planet-${i}`} 
+  as="div"
+  animation={isEnterPressed ? `${moveDirection} 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${(planetDetails.length - Math.abs(selectedPlanetIndex - i)) * 0.1}s forwards` : ''}
+  style={{ willChange: 'transform, opacity' }}
+>
+  <Planet 
+    size={planetSizes[i]} 
+    planetInfo={planet} 
+    isSelected={selectedPlanet === planet.name} 
+    setSelected={setSelectedPlanet} 
+  />
   </Box>
           )
         })}
