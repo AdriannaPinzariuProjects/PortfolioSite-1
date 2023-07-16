@@ -7,6 +7,9 @@ import AboutMe from './components/pages/About.jsx';
 import Experience from './components/pages/Experience.jsx';
 import Hobby from './components/pages/Hobby.jsx';
 import Location from './components/pages/Loaction.jsx';
+//import './App.css';
+import './Fonts.css';
+
 
 function App() {
   return (

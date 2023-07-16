@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Flex, Heading, Button, Spacer } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
-
+import  './Component.css'
 const MotionButton = motion(Button);
 
 const buttonVariants = {
@@ -12,7 +12,7 @@ const buttonVariants = {
 
 function Navbar() {
   return (
-    <Flex mt="3" bg="transparent" color="white" boxShadow="md" position="sticky" top={0} zIndex={3}>
+    <Flex style={{ fontFamily: 'Josefin Sans' }} mt="3" bg="transparent" color="white" boxShadow="md" position="sticky" top={0} zIndex={3}>
       <Heading size="md" ml="2">My Portfolio</Heading>
       <Spacer />
       <Link to="/">
@@ -25,7 +25,7 @@ function Navbar() {
           size="lg"
           color="white"
         >
-          Home
+          HOME
         </MotionButton>
       </Link>
       <Link to="/about">
@@ -38,7 +38,7 @@ function Navbar() {
           size="lg"
           color="white"
         >
-          About
+          ABOUT
         </MotionButton>
       </Link>
       <Link to="/experience">
@@ -51,7 +51,7 @@ function Navbar() {
           size="lg"
           color="white"
         >
-          Experiences
+          EXPERIENCES
         </MotionButton>
       </Link>
       <Link to="/hobby">
@@ -64,7 +64,7 @@ function Navbar() {
           size="lg"
           color="white"
         >
-          Hobbies
+          HOBBIES
         </MotionButton>
       </Link>
       <Link to="/location">
@@ -77,7 +77,7 @@ function Navbar() {
           size="lg"
           color="white"
         >
-          Location
+          LOCATION
         </MotionButton>
       </Link>
     </Flex>
