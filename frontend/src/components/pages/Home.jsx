@@ -26,7 +26,15 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
           transition="background-size 0.5s, width 0.5s"
         >
           <AspectRatio ratio={1}>
-            <Box borderRadius="50%" border={`${borderSize} solid white`} position="absolute" left={isSun ? '50%' : '0'} right="0" top="0" bottom="0"/>
+            <Box 
+              borderRadius="50%" 
+              border={isSelected ? 'none' : `${borderSize} solid white`} 
+              position="absolute" 
+              left={isSun ? '50%' : '0'} 
+              right="0" 
+              top="0" 
+              bottom="0"
+            />
           </AspectRatio>
         </Box>
         {planetInfo && 
@@ -38,9 +46,6 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
       </VStack>
     );
   }
-  
-
-  
   
 
 function Home() {
