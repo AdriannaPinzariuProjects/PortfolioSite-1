@@ -2,6 +2,8 @@ import React from 'react';
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Global, css } from "@emotion/react";
+import 'odometer/themes/odometer-theme-default.css';
+
 import HomePage from './components/pages/Home.jsx';
 import AboutMe from './components/pages/About.jsx';
 import Experience from './components/pages/Experience.jsx';
