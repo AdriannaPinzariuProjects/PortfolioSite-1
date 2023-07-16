@@ -25,7 +25,7 @@ function CustomBarIcon() {
 
 function Navbar() {
   return (
-    <Flex alignItems="center" pt='1.7%' bg="transparent" color="white" boxShadow="md" position="sticky" top={0} zIndex={3}>
+    <Flex alignItems="center" pt='.5%' pb='1%' bg="black" color="white" boxShadow="md" position="sticky" top={0} zIndex={3}>
       <Box ml="5.75%">
         <img src={planetImg} alt="Planet" />
       </Box>

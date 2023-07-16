@@ -4,3 +4,10 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+.opensans-light {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+  }
+  
