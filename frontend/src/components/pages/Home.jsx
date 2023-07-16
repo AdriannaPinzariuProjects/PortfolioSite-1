@@ -17,6 +17,22 @@ const moveLeftAnimation = keyframes`
   100% { transform: translate3d(-100vw, 0, 1000px) scale(3); opacity: 0; }
 `;
 
+const textAnimation = keyframes`
+  0% { transform: translateZ(1000px) scale(2); opacity: 0; }
+  100% { transform: translateZ(0) scale(1); opacity: 1; }
+`;
+
+const textFallAnimation = keyframes`
+  0% { 
+    transform: translateZ(-500px) scale(5);
+    opacity: 0; 
+  }
+  100% { 
+    transform: translateZ(0) scale(1);
+    opacity: 1; 
+  }
+`;
+
 
 function Planet({ size, isSun = false, planetInfo, isSelected, setSelected, isEnterPressed }) {
     const borderSize = isSun ? '0.05px' : '0.05px';
@@ -39,7 +55,7 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected, isEn
   backgroundImage={isSelected ? planetImage : ''}
   backgroundSize={isSelected ? 'cover' : '0 0'}
   _hover={{ backgroundSize: 'cover' }}
-  transition={isEnterPressed ? 'width 3s .8s, background-size 2s 1s' : 'width 0.5s, background-size 0.5s'}
+  transition={isEnterPressed ? 'width 2s .8s, background-size 2s 1s' : 'width 0.5s, background-size 0.5s'}
 >
 
           <AspectRatio ratio={1}>
@@ -168,6 +184,27 @@ function Home() {
       <Box position="absolute" right="10%" top="50%" transform="translateY(-50%)">
         <Planet size={500} isSun />
       </Box>
+      <Box
+  as="div"
+  position="absolute"
+  width="100%"
+  top="22.5%"
+  transform="translateY(-50%)"
+  textAlign="center"
+  fontSize="14vw"
+  fontWeight="bold"
+  fontFamily="'Roboto', sans-serif"
+  color="white"
+  letterSpacing="0.3em" 
+  textTransform="uppercase"
+  opacity={0}
+  animation={isEnterPressed ? `${textFallAnimation} 1s 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards` : ''}
+>
+  {selectedPlanet}
+</Box>
+
+
+      
       <Footer />
     </div>
   );
