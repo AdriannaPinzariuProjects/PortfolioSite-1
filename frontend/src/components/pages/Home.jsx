@@ -3,46 +3,46 @@ import { Flex, Box, AspectRatio, VStack, Text } from '@chakra-ui/react';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 
-
 function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
-    const borderSize = isSun ? '0.05px' : '0.05px';
+  const borderSize = isSun ? '0.05px' : '0.05px';
   
-    const getImage = (planetName) => {
-      try {
-        return `url(${process.env.PUBLIC_URL}/${planetName.toLowerCase()}.png)`;
-      } catch {
-        return null;
+  const getImage = (planetName) => {
+    try {
+      return `url(${process.env.PUBLIC_URL}/${planetName.toLowerCase()}.png)`;
+    } catch {
+      return null;
+    }
+  };
+
+  const planetImage = planetInfo ? getImage(planetInfo.name) : null;
+  const zoomSize = isSelected ? `${size * 2}%` : `${size}%`;
+
+  return (
+    <VStack spacing="1em" align="center" onClick={() => setSelected(planetInfo.name)}>
+      {planetInfo && <Text color="white">{planetInfo.au}</Text>}
+      <Box 
+        position="relative" 
+        w={zoomSize}
+        h="auto"
+        backgroundImage={isSelected ? planetImage : ''} // set background image if the planet is selected
+        backgroundSize='cover'
+        _hover={{ backgroundImage: planetImage ? planetImage : '' , backgroundSize: 'cover' }}
+        transition="background-image 0.5s, width 0.5s"
+      >
+        <AspectRatio ratio={1}>
+          <Box borderRadius="50%" border={`${borderSize} solid white`} position="absolute" left={isSun ? '50%' : '0'} right="0" top="0" bottom="0"/>
+        </AspectRatio>
+      </Box>
+      {planetInfo && 
+        <>
+          <Text color="white">{planetInfo.name}</Text>
+          <Text color="white">{planetInfo.moons} Moons</Text>
+        </>
       }
-    };
-  
-    const planetImage = planetInfo ? getImage(planetInfo.name) : null;
-    
-    // Increase size if selected
-    const zoomSize = isSelected ? `${size * 2}%` : `${size}%`;
-    
-    return (
-      <VStack spacing="1em" align="center" onClick={() => setSelected(planetInfo.name)}>
-        {planetInfo && <Text color="white">{planetInfo.au}</Text>}
-        <Box 
-          position="relative" 
-          w={zoomSize}
-          h="auto"
-          _hover={{ backgroundImage: planetImage ? planetImage : '' , backgroundSize: 'cover' }}
-          transition="background-image 0.5s, width 0.5s"
-        >
-          <AspectRatio ratio={1}>
-            <Box borderRadius="50%" border={`${borderSize} solid white`} position="absolute" left={isSun ? '50%' : '0'} right="0" top="0" bottom="0"/>
-          </AspectRatio>
-        </Box>
-        {planetInfo && 
-          <>
-            <Text color="white">{planetInfo.name}</Text>
-            <Text color="white">{planetInfo.moons} Moons</Text>
-          </>
-        }
-      </VStack>
-    );
-  }
+    </VStack>
+  );
+}
+
   
   
 
@@ -80,10 +80,8 @@ function Home() {
       }
     }
 
-    // Add the event listener
-    window.addEventListener("keydown", handleKeyDown);
-
     // Remove event listener on cleanup
+    window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedPlanet, planetDetails]);
 
