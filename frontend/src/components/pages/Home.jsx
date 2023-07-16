@@ -4,6 +4,8 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import { keyframes } from '@emotion/react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Sphere, OrbitControls, Stars } from '@react-three/drei';
 
 const moveRightAnimation = keyframes`
   0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
@@ -16,10 +18,7 @@ const moveLeftAnimation = keyframes`
 `;
 
 
-
-
-
-function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
+function Planet({ size, isSun = false, planetInfo, isSelected, setSelected, isEnterPressed }) {
     const borderSize = isSun ? '0.05px' : '0.05px';
   
     const getImage = (planetName) => {
@@ -27,7 +26,8 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
     };
   
     const planetImage = planetInfo ? getImage(planetInfo.name) : null;
-    const zoomSize = isSelected ? `${size * 2}%` : `${size}%`;
+    // Update the zoomSize calculation to account for isEnterPressed
+    const zoomSize = isSelected ? (isEnterPressed ? `${size * 3}%` : `${size * 2}%`) : `${size}%`;
   
     return (
       <VStack spacing="1em" align="center" onClick={() => setSelected(planetInfo.name)}>
@@ -62,6 +62,7 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
       </VStack>
     );
   }
+  
   
 
 function Home() {
@@ -136,11 +137,13 @@ function Home() {
                 as="div"
               >
                 <Planet 
-                  size={planetSizes[i]} 
-                  planetInfo={planet} 
-                  isSelected={selectedPlanet === planet.name} 
-                  setSelected={setSelectedPlanet} 
-                />
+  size={planetSizes[i]} 
+  planetInfo={planet} 
+  isSelected={selectedPlanet === planet.name} 
+  setSelected={setSelectedPlanet} 
+  isEnterPressed={isEnterPressed}
+/>
+
               </Box>
             )
           }
