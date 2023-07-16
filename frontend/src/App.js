@@ -7,6 +7,7 @@ import AboutMe from './components/pages/About.jsx';
 import Experience from './components/pages/Experience.jsx';
 import Hobby from './components/pages/Hobby.jsx';
 import Location from './components/pages/Loaction.jsx';
+import PlanetInfo from './components/pages/PlanetInfo';
 //import './App.css';
 import './Fonts.css';
 
@@ -33,7 +34,7 @@ function App() {
           <Route path="/experience" element={<Experience />} />
           <Route path="/hobby" element={<Hobby />} />
           <Route path="/location" element={<Location />} />
-          {/* Notice the change here */}
+          <Route path="/:planetName/info" element={<PlanetInfo />} /> 
         </Routes>
       </Router>
     </ChakraProvider>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Flex, Box } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 import Navbar from '../Navbar';
 import Footer from '../Footer';
-import { moveRightAnimation, moveLeftAnimation, textFallAnimation } from './Animations';
+import { moveRightAnimation, moveLeftAnimation, textFallAnimation, fadeOutAnimation } from './Animations';
 import planetDetails from './PlanetDetails';
 import Planet from './Planet';
 import PlanetDescription from './PlanetDescription';
@@ -24,6 +25,8 @@ function Home() {
       img.src = `${process.env.PUBLIC_URL}/${planet.name.toLowerCase()}.png`;
     });
   }, []);
+
+  const navigate = useNavigate();
   
   useEffect(() => {
     function handleKeyDown(e) {
@@ -41,6 +44,9 @@ function Home() {
       } else if (e.key === "Enter") {
         // Set isEnterPressed to true when Enter key is pressed
         setIsEnterPressed(true);
+        setTimeout(() => {
+          navigate(`/${selectedPlanet}/info`);
+        }, 1000);
       }
     }
   
@@ -55,7 +61,20 @@ function Home() {
 
 
   return (
-    <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', display: 'flex', flexDirection: 'column' }}>
+    <div>
+      <style>
+        {fadeOutAnimation}
+      </style>
+      <div
+        style={{
+          width: '100vw', 
+          height: '100vh', 
+          backgroundColor: 'black', 
+          display: 'flex', 
+          flexDirection: 'column',
+          animation: isEnterPressed ? 'fadeOut 1s ease-out forwards' : '',
+        }}
+      >
       <Navbar />
       <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%' mr='10%' style={{ perspective: '1000px' }}>
         {planetDetails.map((planet, i) => {
@@ -123,6 +142,7 @@ function Home() {
 
       
       <Footer />
+    </div>
     </div>
   );
 }

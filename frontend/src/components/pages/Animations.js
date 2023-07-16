@@ -21,6 +21,32 @@ export const textFallAnimation = keyframes`
   }
 `;
 
+export const moveTowardCenterAnimation = keyframes`
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
+`;
+
+export const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+`;
+
+export const fadeOutAnimation = `
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+`;
+
+
+
+
+
 /* 
 const moveRightAnimation = keyframes`
   0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
