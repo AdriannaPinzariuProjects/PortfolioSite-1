@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Box, VStack, Heading, Text, Progress, UnorderedList, ListItem, useColorModeValue, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Box, VStack, Heading, Text, useColorModeValue, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 import { motion } from 'framer-motion';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';

@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
-import { Box, VStack, Heading, useColorModeValue, TabPanel, TabPanels, Tabs, AlertDialog,
+import { Box, useColorModeValue, AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
   AlertDialogHeader,
@@ -9,8 +9,7 @@ import { Box, VStack, Heading, useColorModeValue, TabPanel, TabPanels, Tabs, Ale
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import { motion } from 'framer-motion';
-import { Raycaster, Vector2 } from 'three';
-import { MeshBasicMaterial, TextureLoader, SphereGeometry, Mesh, Vector3 } from 'three';
+import { MeshBasicMaterial, TextureLoader, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import earthTextureUrl from '../../Assets/earth.jpg'; // Path to your texture
 

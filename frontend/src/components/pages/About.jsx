@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Box, VStack, Heading, Text, Progress, UnorderedList, ListItem, useColorModeValue, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Box, VStack, Heading, Text, useColorModeValue, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 import { motion } from 'framer-motion';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -10,10 +10,10 @@ import Footer from '../Footer';
 
 const MotionBox = motion(Box);
 
-const buttonVariants = {
+/*const buttonVariants = {
   hover: { scale: 1.1 },
   tap: { scale: 0.9 },
-};
+};*/
 
 function Model() {
   const ref = useRef();
@@ -44,23 +44,23 @@ function Model() {
   return model ? <primitive object={model.scene} position={[Math.random() * 100 - 50, Math.random() * 100, Math.random() * 100 - 50]} ref={ref} /> : null;
 }
 
-function TimelineEvent({ date, event }) {
+/*function TimelineEvent({ date, event }) {
   return (
     <ListItem>
       <Text fontSize="xl" color={useColorModeValue("white", "white")}>{date}</Text>
       <Text color={useColorModeValue("white", "white")}>{event}</Text>
     </ListItem>
   );
-}
+}*/
 
-function SkillBar({ skill, proficiency }) {
+/*function SkillBar({ skill, proficiency }) {
   return (
     <Box width="full">
       <Text fontSize="xl" color={useColorModeValue("white", "white")}>{skill}</Text>
       <Progress value={proficiency} colorScheme="purple" />
     </Box>
   );
-}
+}*/
 
 function About() {
   const bgGradient = useColorModeValue("linear(to-br, #4b5178, #3a4062)", "linear(to-br, #4b5178, #3a4062)");

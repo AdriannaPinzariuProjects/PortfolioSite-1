@@ -1,186 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Flex, Box, AspectRatio, VStack, Text } from '@chakra-ui/react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import React, { useState, useEffect } from 'react';
+import { Flex, Box } from '@chakra-ui/react';
+
 import Navbar from '../Navbar';
 import Footer from '../Footer';
-import { keyframes } from '@emotion/react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, OrbitControls, Stars } from '@react-three/drei';
+import { moveRightAnimation, moveLeftAnimation, textFallAnimation } from './Animations';
+import planetDetails from './PlanetDetails';
+import Planet from './Planet';
+import PlanetDescription from './PlanetDescription';
 
-const moveRightAnimation = keyframes`
-  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
-  100% { transform: translate3d(100vw, 0, 1000px) scale(3); opacity: 0; }
-`;
-
-const moveLeftAnimation = keyframes`
-  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
-  100% { transform: translate3d(-100vw, 0, 1000px) scale(3); opacity: 0; }
-`;
-
-const textAnimation = keyframes`
-  0% { transform: translateZ(1000px) scale(2); opacity: 0; }
-  100% { transform: translateZ(0) scale(1); opacity: 1; }
-`;
-
-const textFallAnimation = keyframes`
-  0% { 
-    transform: translateZ(-500px) scale(5);
-    opacity: 0; 
-  }
-  100% { 
-    transform: translateZ(0) scale(1);
-    opacity: 1; 
-  }
-`;
-
-
-function Planet({ size, isSun = false, planetInfo, isSelected, setSelected, isEnterPressed }) {
-    const borderSize = isSun ? '0.05px' : '0.05px';
-  
-    const getImage = (planetName) => {
-      return `url(${process.env.PUBLIC_URL}/${planetName.toLowerCase()}.png)`;
-    };
-  
-    const planetImage = planetInfo ? getImage(planetInfo.name) : null;
-    // Update the zoomSize calculation to account for isEnterPressed
-    const zoomSize = isSelected ? (isEnterPressed ? `${size * 30}%` : `${size * 2}%`) : `${size}%`;
-  
-    return (
-      <VStack spacing="1em" align="center" onClick={() => setSelected(planetInfo.name)}>
-        {planetInfo && <Text color="white">{planetInfo.au}</Text>}
-        <Box 
-  position="relative" 
-  w={zoomSize}
-  h="auto"
-  backgroundImage={isSelected ? planetImage : ''}
-  backgroundSize={isSelected ? 'cover' : '0 0'}
-  _hover={{ backgroundSize: 'cover' }}
-  transition={isEnterPressed ? 'width 1.75s .8s, background-size 2s 1s' : 'width 0.5s, background-size 0.5s'}
->
-
-          <AspectRatio ratio={1}>
-            <Box 
-              borderRadius="50%" 
-              border={isSelected ? 'none' : `${borderSize} solid white`} 
-              position="absolute" 
-              left={isSun ? '50%' : '0'} 
-              right="0" 
-              top="0" 
-              bottom="0"
-            />
-          </AspectRatio>
-        </Box>
-        {planetInfo && 
-          <>
-            <Text color="white">{planetInfo.name}</Text>
-            <Text color="white">{planetInfo.moons} Moons</Text>
-          </>
-        }
-      </VStack>
-    );
-  }
-  
-  function PlanetDescription({ planet }) {
-    if (!planet) {
-      return null;
-    }
-  
-    return (
-      <Box 
-        position="absolute" 
-        left="10%" 
-        top="55%" 
-        color="white" 
-        width="50%"
-        fontSize="1.3vw"
-      >
-        <Text lineHeight="1.7">{planet.description}</Text>
-        <Flex mt={5} wrap="wrap" align="center" justify="space-between">
-          <Flex direction="row" align="center">
-            <Text color="white" fontWeight="bold" fontSize="0.7em">DAY</Text>
-            <Text color="white" fontSize="1.1em" ml={3}>{planet.day}</Text>
-          </Flex>
-          <Flex direction="row" align="center">
-            <Text color="white" fontWeight="bold" fontSize="0.7em">RADIUS</Text>
-            <Text color="white" fontSize="1.1em" ml={3}>{planet.radius}</Text>
-          </Flex>
-          <Flex direction="row" align="center">
-            <Text color="white" fontWeight="bold" fontSize="0.7em">MOONS</Text>
-            <Text color="white" fontSize="1.1em" ml={3}>{planet.moons}</Text>
-          </Flex>
-          <Flex direction="row" align="center">
-            <Text color="white" fontWeight="bold" fontSize="0.7em">TYPE</Text>
-            <Text color="white" fontSize="1.1em" ml={3}>{planet.planetType}</Text>
-          </Flex>
-        </Flex>
-      </Box>
-    );
-  }
-  
-  
-  
-  
-  
-  
 
 function Home() {
-const planetDetails = useMemo(() => [
-    {
-      name: 'Pluto', 
-      au: '39.5 AU', 
-      moons: 5, 
-      description: "Pluto, a dwarf planet, is the largest known object in the Kuiper Belt. It was originally classified as the ninth planet from the Sun."
-    },
-    {
-      name: 'Neptune', 
-      au: '30.07 AU', 
-      moons: 14, 
-      description: "Neptune is the eighth and farthest-known Solar planet from the Sun. It's noted for its beautiful blue color caused by methane in the atmosphere."
-    },
-    {
-      name: 'Uranus', 
-      au: '19.18 AU', 
-      moons: 27, 
-      description: "Uranus is the seventh planet from the Sun. Known for its unique blue-green color, it's often referred to as an “ice giant” planet."
-    },
-    {
-      name: 'Saturn', 
-      au: '9.58 AU', 
-      moons: 82, 
-      description: "Saturn is the sixth planet from the Sun and the second-largest in the Solar System. It's recognizable for its elaborate ring system."
-    },
-    {
-      name: 'Jupiter', 
-      au: '5.20 AU', 
-      moons: 79, 
-      description: "Jupiter is the fifth planet from the Sun and the largest in the Solar System. Its notable features include the Great Red Spot storm and its prominent cloud bands. Jupiter is the fifth planet from the Sun and the largest in the Solar System. Its notable features include the Great Red Spot storm and its prominent cloud bands."
-    },
-    {
-      name: 'Mars', 
-      au: '1.52 AU', 
-      moons: 2, 
-      description: "Mars is the fourth planet from the Sun and is commonly referred to as the 'Red Planet'. It's the second-smallest planet in the Solar System after Mercury."
-    },
-    {
-      name: 'Earth', 
-      au: '1 AU', 
-      moons: 1, 
-      description: "Earth is the third planet from the Sun and the only astronomical object known to harbor life. About 71 percent of Earth's surface is covered with water, most of it in the oceans."
-    },
-    {
-      name: 'Venus', 
-      au: '0.72 AU', 
-      moons: 0, 
-      description: "Venus is the second planet from the Sun. Despite being similar in size to Earth, it's known for its intense heat and volcanic activity."
-    },
-    {
-      name: 'Mercury', 
-      au: '0.39 AU', 
-      moons: 0, 
-      description: "Mercury is the smallest and innermost planet in the Solar System. Its orbital period around the Sun is less than any other planet's."
-    },
-  ], []);
-  
     
     // Relative sizes of the planets (not to scale)
     const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
@@ -194,7 +23,7 @@ const planetDetails = useMemo(() => [
       const img = new Image();
       img.src = `${process.env.PUBLIC_URL}/${planet.name.toLowerCase()}.png`;
     });
-  }, [planetDetails]);
+  }, []);
   
   useEffect(() => {
     function handleKeyDown(e) {
@@ -222,7 +51,7 @@ const planetDetails = useMemo(() => [
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [selectedPlanet, planetDetails]);
+  }, [selectedPlanet]);
 
 
   return (
