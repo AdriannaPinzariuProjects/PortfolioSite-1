@@ -1,28 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex, Box, AspectRatio, VStack, Text } from '@chakra-ui/react';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 
-function Planet({ size, isSun = false, planetInfo }) {
-  const borderSize = isSun ? '.25px' : '.25px';
 
-  return (
-    <VStack spacing="1em" align="center">
-      {!isSun && <Text color="white">{planetInfo.au}</Text>}
-      <Box position="relative" w={`${size}%`} h="auto">
-        <AspectRatio ratio={1}>
-          <Box borderRadius="50%" border={`${borderSize} solid white`} position="absolute" left={isSun ? '50%' : '0'} right="0" top="0" bottom="0"/>
-        </AspectRatio>
-      </Box>
-      {!isSun && 
-        <>
-          <Text color="white">{planetInfo.name}</Text>
-          <Text color="white">{planetInfo.moons} Moons</Text>
-        </>
+function Planet({ size, isSun = false, planetInfo }) {
+    const borderSize = isSun ? '0.05px' : '0.05px';
+    
+    // Function to check if image exists
+    const getImage = (planetName) => {
+      try {
+        return `url(${process.env.PUBLIC_URL}/${planetName.toLowerCase()}.png)`;
+      } catch {
+        return null;  // if the image doesn't exist, return null
       }
-    </VStack>
-  );
-}
+    };
+    
+    // Only get the image if planetInfo exists
+    const planetImage = planetInfo ? getImage(planetInfo.name) : null;
+    
+    return (
+      <VStack spacing="1em" align="center">
+        {planetInfo && <Text color="white">{planetInfo.au}</Text>}
+        <Box 
+          position="relative" 
+          w={`${size}%`} 
+          h="auto"
+          _hover={{ backgroundImage: planetImage ? planetImage : '' , backgroundSize: 'cover' }}  // if the image exists, set it as the background
+          transition="background-image 0.5s"
+        >
+          <AspectRatio ratio={1}>
+            <Box borderRadius="50%" border={`${borderSize} solid white`} position="absolute" left={isSun ? '50%' : '0'} right="0" top="0" bottom="0"/>
+          </AspectRatio>
+        </Box>
+        {planetInfo && 
+          <>
+            <Text color="white">{planetInfo.name}</Text>
+            <Text color="white">{planetInfo.moons} Moons</Text>
+          </>
+        }
+      </VStack>
+    );
+  }
+  
+  
 
 function Home() {
     // Planet details
@@ -39,17 +60,19 @@ function Home() {
     ];
     
     // Relative sizes of the planets (not to scale)
-    const planetSizes = [4, 6, 6.5, 5, 8, 7, 5.5, 5, 4];
+    const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
 
     return (
         <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
-            <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%'>
+            <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%' mr='10%'>
                 {planetDetails.map((planet, i) => (
                   <Planet key={i} size={planetSizes[i]} planetInfo={planet} />
                 ))}
-                <Planet size={35} ml='30%' isSun />
             </Flex>
+            <Box position="absolute" right="10%" top="50%" transform="translateY(-50%)">
+              <Planet size={500} isSun />
+            </Box>
             <Footer />
         </div>
     );
