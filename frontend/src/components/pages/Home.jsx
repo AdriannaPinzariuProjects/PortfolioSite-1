@@ -64,6 +64,14 @@ function Home() {
     const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
 
     const [selectedPlanet, setSelectedPlanet] = useState(null);
+      
+     // Image preloading
+  useEffect(() => {
+    planetDetails.forEach((planet) => {
+      const img = new Image();
+      img.src = `${process.env.PUBLIC_URL}/${planet.name.toLowerCase()}.png`;
+    });
+  }, [planetDetails]);
   
   // Add an effect that runs once when the component mounts
   useEffect(() => {
