@@ -55,7 +55,7 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected, isEn
   backgroundImage={isSelected ? planetImage : ''}
   backgroundSize={isSelected ? 'cover' : '0 0'}
   _hover={{ backgroundSize: 'cover' }}
-  transition={isEnterPressed ? 'width 2s .8s, background-size 2s 1s' : 'width 0.5s, background-size 0.5s'}
+  transition={isEnterPressed ? 'width 1.75s .8s, background-size 2s 1s' : 'width 0.5s, background-size 0.5s'}
 >
 
           <AspectRatio ratio={1}>
@@ -198,7 +198,7 @@ function Home() {
   letterSpacing="0.3em" 
   textTransform="uppercase"
   opacity={0}
-  animation={isEnterPressed ? `${textFallAnimation} 1s 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards` : ''}
+  animation={isEnterPressed ? `${textFallAnimation} 1.75s 0.7s cubic-bezier(0.3, 0.5, 0.2, 1) forwards` : ''}
 >
   {selectedPlanet}
 </Box>
