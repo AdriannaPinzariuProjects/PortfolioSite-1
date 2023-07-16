@@ -80,6 +80,47 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected, isEn
     );
   }
   
+  function PlanetDescription({ planet }) {
+    if (!planet) {
+      return null;
+    }
+  
+    return (
+      <Box 
+        position="absolute" 
+        left="10%" 
+        top="55%" 
+        color="white" 
+        width="50%"
+        fontSize="1.3vw"
+      >
+        <Text lineHeight="1.7">{planet.description}</Text>
+        <Flex mt={5} wrap="wrap" align="center" justify="space-between">
+          <Flex direction="row" align="center">
+            <Text color="white" fontWeight="bold" fontSize="0.7em">DAY</Text>
+            <Text color="white" fontSize="1.1em" ml={3}>{planet.day}</Text>
+          </Flex>
+          <Flex direction="row" align="center">
+            <Text color="white" fontWeight="bold" fontSize="0.7em">RADIUS</Text>
+            <Text color="white" fontSize="1.1em" ml={3}>{planet.radius}</Text>
+          </Flex>
+          <Flex direction="row" align="center">
+            <Text color="white" fontWeight="bold" fontSize="0.7em">MOONS</Text>
+            <Text color="white" fontSize="1.1em" ml={3}>{planet.moons}</Text>
+          </Flex>
+          <Flex direction="row" align="center">
+            <Text color="white" fontWeight="bold" fontSize="0.7em">TYPE</Text>
+            <Text color="white" fontSize="1.1em" ml={3}>{planet.planetType}</Text>
+          </Flex>
+        </Flex>
+      </Box>
+    );
+  }
+  
+  
+  
+  
+  
   
 
 function Home() {
@@ -112,7 +153,7 @@ const planetDetails = useMemo(() => [
       name: 'Jupiter', 
       au: '5.20 AU', 
       moons: 79, 
-      description: "Jupiter is the fifth planet from the Sun and the largest in the Solar System. Its notable features include the Great Red Spot storm and its prominent cloud bands."
+      description: "Jupiter is the fifth planet from the Sun and the largest in the Solar System. Its notable features include the Great Red Spot storm and its prominent cloud bands. Jupiter is the fifth planet from the Sun and the largest in the Solar System. Its notable features include the Great Red Spot storm and its prominent cloud bands."
     },
     {
       name: 'Mars', 
@@ -233,10 +274,10 @@ const planetDetails = useMemo(() => [
   as="div"
   position="absolute"
   width="100%"
-  top="22.5%"
+  top="21.5%"
   transform="translateY(-50%)"
   textAlign="center"
-  fontSize="14vw"
+  fontSize="12vw"
   fontWeight="bold"
   fontFamily="'Roboto', sans-serif"
   color="white"
@@ -247,6 +288,8 @@ const planetDetails = useMemo(() => [
 >
   {selectedPlanet}
 </Box>
+{selectedPlanet && isEnterPressed && <PlanetDescription planet={planetDetails.find(planet => planet.name === selectedPlanet)} />}
+
 
 
       
