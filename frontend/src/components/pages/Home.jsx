@@ -4,30 +4,31 @@ import Navbar from '../Navbar';
 import Footer from '../Footer';
 
 
-function Planet({ size, isSun = false, planetInfo }) {
+function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
     const borderSize = isSun ? '0.05px' : '0.05px';
-    
-    // Function to check if image exists
+  
     const getImage = (planetName) => {
       try {
         return `url(${process.env.PUBLIC_URL}/${planetName.toLowerCase()}.png)`;
       } catch {
-        return null;  // if the image doesn't exist, return null
+        return null;
       }
     };
-    
-    // Only get the image if planetInfo exists
+  
     const planetImage = planetInfo ? getImage(planetInfo.name) : null;
     
+    // Increase size if selected
+    const zoomSize = isSelected ? `${size * 2}%` : `${size}%`;
+  
     return (
-      <VStack spacing="1em" align="center">
+      <VStack spacing="1em" align="center" onClick={() => setSelected(planetInfo.name)}>
         {planetInfo && <Text color="white">{planetInfo.au}</Text>}
         <Box 
           position="relative" 
-          w={`${size}%`} 
+          w={zoomSize}
           h="auto"
-          _hover={{ backgroundImage: planetImage ? planetImage : '' , backgroundSize: 'cover' }}  // if the image exists, set it as the background
-          transition="background-image 0.5s"
+          _hover={{ backgroundImage: planetImage ? planetImage : '' , backgroundSize: 'cover' }}
+          transition="background-image 0.5s, width 0.5s"
         >
           <AspectRatio ratio={1}>
             <Box borderRadius="50%" border={`${borderSize} solid white`} position="absolute" left={isSun ? '50%' : '0'} right="0" top="0" bottom="0"/>
@@ -62,20 +63,29 @@ function Home() {
     // Relative sizes of the planets (not to scale)
     const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
 
-    return (
-        <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', display: 'flex', flexDirection: 'column' }}>
-            <Navbar />
-            <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%' mr='10%'>
-                {planetDetails.map((planet, i) => (
-                  <Planet key={i} size={planetSizes[i]} planetInfo={planet} />
-                ))}
-            </Flex>
-            <Box position="absolute" right="10%" top="50%" transform="translateY(-50%)">
-              <Planet size={500} isSun />
-            </Box>
-            <Footer />
-        </div>
-    );
+    const [selectedPlanet, setSelectedPlanet] = useState(null);
+
+  return (
+    <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', display: 'flex', flexDirection: 'column' }}>
+      <Navbar />
+      <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%' mr='10%'>
+          {planetDetails.map((planet, i) => (
+            <Planet 
+              key={i} 
+              size={planetSizes[i]} 
+              planetInfo={planet} 
+              isSelected={selectedPlanet === planet.name} 
+              setSelected={setSelectedPlanet} 
+            />
+          ))}
+      </Flex>
+      <Box position="absolute" right="10%" top="50%" transform="translateY(-50%)">
+        <Planet size={500} isSun />
+      </Box>
+      <Footer />
+    </div>
+  );
 }
+
 
 export default Home;
