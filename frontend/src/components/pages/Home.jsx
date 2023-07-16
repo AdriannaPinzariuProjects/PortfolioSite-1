@@ -5,9 +5,14 @@ import Navbar from '../Navbar';
 import Footer from '../Footer';
 import { keyframes } from '@emotion/react';
 
-const moveOutAnimation = keyframes`
+const moveRightAnimation = keyframes`
   from { transform: translateX(0); }
   to { transform: translateX(100vw); }
+`;
+
+const moveLeftAnimation = keyframes`
+  from { transform: translateX(0); }
+  to { transform: translateX(-100vw); }
 `;
 
 function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
@@ -112,32 +117,51 @@ function Home() {
   }, [selectedPlanet, planetDetails]);
 
 
-return (
+  return (
     <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
       <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%' mr='10%'>
-      {planetDetails.map((planet, i) => (
-        <Box
-          key={isEnterPressed ? i : `planet-${i}`} // Adding dynamic key
-          as="div"
-          animation={isEnterPressed ? `${moveOutAnimation} 1s ease-in-out ${i * 0.3}s forwards` : ''}
-        >
-          <Planet 
-            size={planetSizes[i]} 
-            planetInfo={planet} 
-            isSelected={selectedPlanet === planet.name} 
-            setSelected={setSelectedPlanet} 
-          />
-        </Box>
-      ))}
-    </Flex>
+        {planetDetails.map((planet, i) => {
+          const selectedPlanetIndex = planetDetails.findIndex(p => p.name === selectedPlanet);
+          const moveDirection = i < selectedPlanetIndex ? moveLeftAnimation : moveRightAnimation;
+          // check if the current planet is the selected planet
+          if (selectedPlanet === planet.name) {
+            return (
+              <Box
+                key={`planet-${i}`} // Fixed key for selected planet
+                as="div"
+              >
+                <Planet 
+                  size={planetSizes[i]} 
+                  planetInfo={planet} 
+                  isSelected={selectedPlanet === planet.name} 
+                  setSelected={setSelectedPlanet} 
+                />
+              </Box>
+            )
+          }
+          return (
+            <Box
+              key={isEnterPressed ? i : `planet-${i}`} // Dynamic key for other planets
+              as="div"
+              animation={isEnterPressed ? `${moveDirection} 1s ease-in-out ${(planetDetails.length - Math.abs(selectedPlanetIndex - i)) * 0.3}s forwards` : ''}
+            >
+              <Planet 
+                size={planetSizes[i]} 
+                planetInfo={planet} 
+                isSelected={selectedPlanet === planet.name} 
+                setSelected={setSelectedPlanet} 
+              />
+            </Box>
+          )
+        })}
+      </Flex>
       <Box position="absolute" right="10%" top="50%" transform="translateY(-50%)">
         <Planet size={500} isSun />
       </Box>
       <Footer />
     </div>
-);
-
+  );
 }
 
 export default Home;
