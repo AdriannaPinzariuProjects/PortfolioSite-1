@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Flex, Box, AspectRatio, VStack, Text } from '@chakra-ui/react';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -19,7 +19,7 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
     
     // Increase size if selected
     const zoomSize = isSelected ? `${size * 2}%` : `${size}%`;
-  
+    
     return (
       <VStack spacing="1em" align="center" onClick={() => setSelected(planetInfo.name)}>
         {planetInfo && <Text color="white">{planetInfo.au}</Text>}
@@ -64,7 +64,30 @@ function Home() {
     const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
 
     const [selectedPlanet, setSelectedPlanet] = useState(null);
+  
+  // Add an effect that runs once when the component mounts
+  useEffect(() => {
+    function handleKeyDown(e) {
+      const currentIndex = planetDetails.findIndex(p => p.name === selectedPlanet);
+      
+      // Check if left or right arrow was pressed
+      if (e.key === "ArrowRight") {
+        const nextIndex = (currentIndex + 1) % planetDetails.length;
+        setSelectedPlanet(planetDetails[nextIndex].name);
+      } else if (e.key === "ArrowLeft") {
+        const prevIndex = (currentIndex - 1 + planetDetails.length) % planetDetails.length;
+        setSelectedPlanet(planetDetails[prevIndex].name);
+      }
+    }
 
+    // Add the event listener
+    window.addEventListener("keydown", handleKeyDown);
+    
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedPlanet, planetDetails]);
+
+    
   return (
     <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
