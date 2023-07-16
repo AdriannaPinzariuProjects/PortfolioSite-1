@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Flex, Box, AspectRatio, VStack, Text } from '@chakra-ui/react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
+import { keyframes } from '@emotion/react';
+
+const moveOutAnimation = keyframes`
+  from { transform: translateX(0); }
+  to { transform: translateX(100vw); }
+`;
 
 function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
     const borderSize = isSun ? '0.05px' : '0.05px';
@@ -66,6 +73,7 @@ function Home() {
     const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
 
     const [selectedPlanet, setSelectedPlanet] = useState(null);
+    const [isEnterPressed, setIsEnterPressed] = useState(false);
       
      // Image preloading
   useEffect(() => {
@@ -75,7 +83,6 @@ function Home() {
     });
   }, [planetDetails]);
   
-  // Add an effect that runs once when the component mounts
   useEffect(() => {
     function handleKeyDown(e) {
       const currentIndex = planetDetails.findIndex(p => p.name === selectedPlanet);
@@ -84,39 +91,53 @@ function Home() {
       if (e.key === "ArrowRight") {
         const nextIndex = (currentIndex + 1) % planetDetails.length;
         setSelectedPlanet(planetDetails[nextIndex].name);
+        setIsEnterPressed(false); // Reset the state when an arrow key is pressed
       } else if (e.key === "ArrowLeft") {
         const prevIndex = (currentIndex - 1 + planetDetails.length) % planetDetails.length;
         setSelectedPlanet(planetDetails[prevIndex].name);
+        setIsEnterPressed(false); // Reset the state when an arrow key is pressed
+      } else if (e.key === "Enter") {
+        // Set isEnterPressed to true when Enter key is pressed
+        setIsEnterPressed(true);
       }
     }
-
-    // Remove event listener on cleanup
+  
+    // Add event listeners
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+  
+    // Remove the event listener on cleanup
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [selectedPlanet, planetDetails]);
 
-    
-  return (
+
+return (
     <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
       <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%' mr='10%'>
-          {planetDetails.map((planet, i) => (
-            <Planet 
-              key={i} 
-              size={planetSizes[i]} 
-              planetInfo={planet} 
-              isSelected={selectedPlanet === planet.name} 
-              setSelected={setSelectedPlanet} 
-            />
-          ))}
-      </Flex>
+      {planetDetails.map((planet, i) => (
+        <Box
+          key={isEnterPressed ? i : `planet-${i}`} // Adding dynamic key
+          as="div"
+          animation={isEnterPressed ? `${moveOutAnimation} 1s ease-in-out ${i * 0.3}s forwards` : ''}
+        >
+          <Planet 
+            size={planetSizes[i]} 
+            planetInfo={planet} 
+            isSelected={selectedPlanet === planet.name} 
+            setSelected={setSelectedPlanet} 
+          />
+        </Box>
+      ))}
+    </Flex>
       <Box position="absolute" right="10%" top="50%" transform="translateY(-50%)">
         <Planet size={500} isSun />
       </Box>
       <Footer />
     </div>
-  );
-}
+);
 
+}
 
 export default Home;
