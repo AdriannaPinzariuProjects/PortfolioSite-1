@@ -6,13 +6,13 @@ import Footer from '../Footer';
 import { keyframes } from '@emotion/react';
 
 const moveRightAnimation = keyframes`
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(100vw, 0, 1000px); }
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(100vw, 0, 1000px) scale(3); }
 `;
 
 const moveLeftAnimation = keyframes`
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-100vw, 0, 1000px); }
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-100vw, 0, 1000px) scale(3); }
 `;
 
 
@@ -146,7 +146,7 @@ function Home() {
             <Box
               key={isEnterPressed ? i : `planet-${i}`} // Dynamic key for other planets
               as="div"
-              animation={isEnterPressed ? `${moveDirection} 1s ease-in-out ${(planetDetails.length - Math.abs(selectedPlanetIndex - i)) * 0.3}s forwards` : ''}
+              animation={isEnterPressed ? `${moveDirection} 1s ease-in-out ${(planetDetails.length - Math.abs(selectedPlanetIndex - i)) * 0.15}s forwards` : ''}
             >
               <Planet 
                 size={planetSizes[i]} 
