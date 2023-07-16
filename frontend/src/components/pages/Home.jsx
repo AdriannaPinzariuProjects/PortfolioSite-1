@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Flex, Box, AspectRatio, VStack, Text } from '@chakra-ui/react';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -48,17 +48,17 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected }) {
 
 function Home() {
     // Planet details
-    const planetDetails = [
-      {name: 'Pluto', au: '39.5 AU', moons: 5},
-      {name: 'Neptune', au: '30.07 AU', moons: 14},
-      {name: 'Uranus', au: '19.18 AU', moons: 27},
-      {name: 'Saturn', au: '9.58 AU', moons: 82},
-      {name: 'Jupiter', au: '5.20 AU', moons: 79},
-      {name: 'Mars', au: '1.52 AU', moons: 2},
-      {name: 'Earth', au: '1 AU', moons: 1},
-      {name: 'Venus', au: '0.72 AU', moons: 0},
-      {name: 'Mercury', au: '0.39 AU', moons: 0},
-    ];
+    const planetDetails = useMemo(() => [
+        {name: 'Pluto', au: '39.5 AU', moons: 5},
+        {name: 'Neptune', au: '30.07 AU', moons: 14},
+        {name: 'Uranus', au: '19.18 AU', moons: 27},
+        {name: 'Saturn', au: '9.58 AU', moons: 82},
+        {name: 'Jupiter', au: '5.20 AU', moons: 79},
+        {name: 'Mars', au: '1.52 AU', moons: 2},
+        {name: 'Earth', au: '1 AU', moons: 1},
+        {name: 'Venus', au: '0.72 AU', moons: 0},
+        {name: 'Mercury', au: '0.39 AU', moons: 0},
+      ], []);
     
     // Relative sizes of the planets (not to scale)
     const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
@@ -82,7 +82,7 @@ function Home() {
 
     // Add the event listener
     window.addEventListener("keydown", handleKeyDown);
-    
+
     // Remove event listener on cleanup
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedPlanet, planetDetails]);
