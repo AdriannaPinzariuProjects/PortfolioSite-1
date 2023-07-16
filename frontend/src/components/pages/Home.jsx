@@ -27,20 +27,21 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected, isEn
   
     const planetImage = planetInfo ? getImage(planetInfo.name) : null;
     // Update the zoomSize calculation to account for isEnterPressed
-    const zoomSize = isSelected ? (isEnterPressed ? `${size * 3}%` : `${size * 2}%`) : `${size}%`;
+    const zoomSize = isSelected ? (isEnterPressed ? `${size * 30}%` : `${size * 2}%`) : `${size}%`;
   
     return (
       <VStack spacing="1em" align="center" onClick={() => setSelected(planetInfo.name)}>
         {planetInfo && <Text color="white">{planetInfo.au}</Text>}
         <Box 
-          position="relative" 
-          w={zoomSize}
-          h="auto"
-          backgroundImage={isSelected ? planetImage : ''}
-          backgroundSize={isSelected ? 'cover' : '0 0'}
-          _hover={{ backgroundSize: 'cover' }}
-          transition="background-size 0.5s, width 0.5s"
-        >
+  position="relative" 
+  w={zoomSize}
+  h="auto"
+  backgroundImage={isSelected ? planetImage : ''}
+  backgroundSize={isSelected ? 'cover' : '0 0'}
+  _hover={{ backgroundSize: 'cover' }}
+  transition={isEnterPressed ? 'width 3s .8s, background-size 2s 1s' : 'width 0.5s, background-size 0.5s'}
+>
+
           <AspectRatio ratio={1}>
             <Box 
               borderRadius="50%" 
