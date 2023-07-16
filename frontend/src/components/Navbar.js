@@ -26,7 +26,7 @@ function CustomBarIcon() {
 function Navbar() {
   return (
     <Flex alignItems="center" pt='1.7%' bg="transparent" color="white" boxShadow="md" position="sticky" top={0} zIndex={3}>
-      <Box ml="5%">
+      <Box ml="5.75%">
         <img src={planetImg} alt="Planet" />
       </Box>
       <Text fontSize="1rem" ml="1.3%" fontWeight="bold">MyPortfolio</Text>
