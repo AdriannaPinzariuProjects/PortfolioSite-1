@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; 
 import { Box, Stack, useColorModeValue, Flex, Text } from '@chakra-ui/react';
 import AnimatedNumber from "animated-number-react";
@@ -10,11 +10,27 @@ import Footer from '../Footer';
 import planetDetails from './PlanetDetails';
 import backgroundImage from '../../Assets/testPlanet1.jpg';
 import numberMask from '../../Assets/01.svg';
+import Overlay from './Overlay';
+import withFadeIn from './FadeIn';
 
 
 const PlanetInfo = () => {
     const { planetName } = useParams(); 
     const planet = planetDetails.find(p => p.name === planetName);
+
+    // Overlay Fading In Transition 
+    const [opacity, setOpacity] = useState(1);
+
+    useEffect(() => {
+      const fadeEffect = setInterval(() => {
+        if (opacity > 0) {
+          setOpacity(prevOpacity => prevOpacity - 0.1);
+        }
+      }, 1);
+  
+      return () => clearInterval(fadeEffect);
+    }, [opacity]);
+  
 
     
     const bgImage = {
@@ -32,10 +48,10 @@ const PlanetInfo = () => {
     }
 
   return (
-    <CSSTransition in={true} appear={true} timeout={300} classNames="fade">
     <Box style={bgImage}>
+     <Overlay opacity={opacity} />
       <Flex direction="column" h="100vh" position="relative">
-        <Navbar />
+      <Navbar />
         <Flex 
   direction="column" 
   position="absolute"
@@ -155,10 +171,10 @@ const PlanetInfo = () => {
                 </Stack>
               </Flex>
             </Box> 
-            <Footer flex="0.1"/>
+            <Footer flex="0.1"/> 
           </Flex>
         </Box>
-        </CSSTransition>
+    
       );
     };
     
