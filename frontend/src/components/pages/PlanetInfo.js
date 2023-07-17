@@ -49,6 +49,27 @@ const PlanetInfo = () => {
         <Box style={bgImage}>
             <Flex direction="column" h="100vh" position="relative">
                 <Navbar />
+                <Box
+  bg="white"
+  h="0.05rem"
+  w="5.6rem"
+  position="absolute"
+  top="22.5%" // adjust as necessary
+  left="25.9%" // adjust as necessary
+/>
+
+        <Text style={{
+
+      fontSize: "4em",
+      fontWeight: 700,  
+      color: "white",
+      position: 'absolute',
+      marginLeft: "25.5%",
+      marginTop: "11.75%",
+      letterSpacing:".175em",
+    }}>
+    OVERVIEW
+</Text>
                 <Text style={{
       fontSize: "12.5em",
       fontWeight: 700,  
