@@ -35,9 +35,6 @@ const animationVariants = {
     },
 };
 
-  
-  
-
 const PlanetInfo = () => {
     const { planetName } = useParams(); 
     const planet = planetDetails.find(p => p.name === planetName);
@@ -58,12 +55,30 @@ const PlanetInfo = () => {
 
     
     const bgImage = {
-        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0,.9) 50%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 90%), url(${backgroundImage})`,
+        backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         transition: 'all 1s ease-in-out',
-        height: '100vh', 
+        height: '100vh',
+        position: 'absolute',
+        width: '100%',
+        zIndex: 1
     };
+
+    // Gradient Overlay
+    const gradientOverlay = {
+        background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0,.9) 50%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 90%)',
+        height: '100vh',
+        position: 'absolute',
+        width: '100%',
+        zIndex: 2
+    };
+
+    // Content
+    const contentStyle = {
+        position: 'relative',
+        zIndex: 3
+    }
 
    
 
@@ -72,7 +87,10 @@ const PlanetInfo = () => {
     }
 
   return (
-    <Box style={bgImage}>
+    <Box style={{position: 'relative'}}>
+            <Box style={bgImage}></Box>
+            <Box style={gradientOverlay}></Box>
+            <Box style={contentStyle}>
      <Overlay opacity={opacity} />
       <Flex direction="column" h="100vh" position="relative">
       <Navbar />
@@ -215,6 +233,7 @@ const PlanetInfo = () => {
             </Box> 
             <Footer flex="0.1"/> 
           </Flex>
+          </Box>
         </Box>
     
       );
