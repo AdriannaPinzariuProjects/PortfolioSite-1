@@ -10,8 +10,8 @@ const Overlay = ({ opacity }) => {
       height: '100vh',
       backgroundColor: 'black',
       opacity: opacity,
-      zIndex: 9999,
-      transition: 'opacity 2s ease-in-out'
+      zIndex: 3,
+      transition: 'opacity .5s ease-in-out'
     }} />
   );
 };

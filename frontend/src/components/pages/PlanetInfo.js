@@ -24,7 +24,7 @@ const PlanetInfo = () => {
     useEffect(() => {
       const fadeEffect = setInterval(() => {
         if (opacity > 0) {
-          setOpacity(prevOpacity => prevOpacity - 0.1);
+          setOpacity(prevOpacity => prevOpacity - 0.04);
         }
       }, 1);
   
