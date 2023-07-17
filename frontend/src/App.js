@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
 import { Global, css } from "@emotion/react";
 import { AnimatePresence } from 'framer-motion';
+import 'odometer/themes/odometer-theme-default.css';
 
 import HomePage from './components/pages/Home.jsx';
 import AboutMe from './components/pages/About.jsx';
@@ -11,7 +12,6 @@ import Hobby from './components/pages/Hobby.jsx';
 import Location from './components/pages/Loaction.jsx';
 import PlanetInfo from './components/pages/PlanetInfo';
 import PlanetFeatures from './components/pages/PlanetFeatures';
-import 'odometer/themes/odometer-theme-default.css';
 import './Fonts.css';
 import './App.css'; 
 

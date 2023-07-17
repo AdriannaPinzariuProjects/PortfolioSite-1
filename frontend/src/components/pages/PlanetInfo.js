@@ -7,6 +7,7 @@ import AnimatedNumber from "animated-number-react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { CSSTransition } from 'react-transition-group';
 import { zoomInAndOut } from './Animations';
+import PlanetFeatures from './PlanetFeatures';
 import './PlanetInfo.css'
 
 
@@ -41,9 +42,10 @@ const animationVariants = {
 };
 
 const PlanetInfo = () => {
+
     const { planetName } = useParams(); 
     const planet = planetDetails.find(p => p.name === planetName);
-
+    const [navigateToPlanetFeatures, setNavigateToPlanetFeatures] = useState(false);
     const [flip, set] = useState(false);
     const props = useSpring({
         to: { transform: 'scale(1)' },
@@ -93,6 +95,25 @@ const PlanetInfo = () => {
     const contentStyle = {
         position: 'relative',
         zIndex: 3
+    }
+
+    useEffect(() => {
+        const handleKeyPress = (event) => {
+            // Change 'Enter' to whatever key you want to listen for
+            if (event.key === 'Enter') {
+                setNavigateToPlanetFeatures(true);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, []);
+
+    if (navigateToPlanetFeatures) {
+        return <PlanetFeatures />;
     }
 
    
