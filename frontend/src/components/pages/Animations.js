@@ -21,6 +21,16 @@ export const moveRightInwardAnimation = keyframes`
   }
 `;
 
+export const zoomInAndOut = keyframes` 
+  0% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
+
 export const moveLeftInwardAnimation = keyframes`
   0% {
     transform: translateX(0) translateZ(0);

@@ -16,6 +16,17 @@
     transition: opacity 300ms;
   }
   
+  @keyframes zoomout {
+    0% { transform: scale(1.75); }
+    100% { transform: scale(1); }
+}
+
+.zoom-out {
+    animation-name: zoomout;
+    animation-duration: 1.25s;
+    animation-fill-mode: forwards;
+}
+
 
 /*.image-container {
     background-image: url("your_actual_image_url"); 

@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; 
 import { Box, Stack, useColorModeValue, Flex, Text } from '@chakra-ui/react';
+import { useSpring } from '@react-spring/core';
+import { animated } from '@react-spring/web';
 import AnimatedNumber from "animated-number-react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { CSSTransition } from 'react-transition-group';
+import { zoomInAndOut } from './Animations';
 import './PlanetInfo.css'
+
+
 
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -39,6 +44,18 @@ const PlanetInfo = () => {
     const { planetName } = useParams(); 
     const planet = planetDetails.find(p => p.name === planetName);
 
+    const [flip, set] = useState(false);
+    const props = useSpring({
+        to: { transform: 'scale(1)' },
+        from: { transform: 'scale(3)' },
+        reset: true,
+        reverse: flip,
+        delay: 200,
+        config: { tension: 2 },
+        onRest: () => set(!flip),
+    });
+    
+
     // Overlay Fading In Transition 
     const [opacity, setOpacity] = useState(1);
 
@@ -47,24 +64,22 @@ const PlanetInfo = () => {
         if (opacity > 0) {
           setOpacity(prevOpacity => prevOpacity - 0.08);
         }
-      }, 1);
+      }, 1.25);
   
       return () => clearInterval(fadeEffect);
     }, [opacity]);
   
-
     
     const bgImage = {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        transition: 'all 1s ease-in-out',
         height: '100vh',
         position: 'absolute',
         width: '100%',
-        zIndex: 1
-    };
-
+        zIndex: 1,
+      };
+      
     // Gradient Overlay
     const gradientOverlay = {
         background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0,.9) 50%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 90%)',
@@ -88,7 +103,7 @@ const PlanetInfo = () => {
 
   return (
     <Box style={{position: 'relative'}}>
-            <Box style={bgImage}></Box>
+           <Box style={bgImage} className="zoom-out"></Box>
             <Box style={gradientOverlay}></Box>
             <Box style={contentStyle}>
      <Overlay opacity={opacity} />
@@ -235,7 +250,6 @@ const PlanetInfo = () => {
           </Flex>
           </Box>
         </Box>
-    
       );
     };
     
