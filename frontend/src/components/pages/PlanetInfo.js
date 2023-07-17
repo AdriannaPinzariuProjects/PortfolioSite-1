@@ -50,47 +50,78 @@ const PlanetInfo = () => {
       <Flex direction="column" h="100vh" position="relative">
         <Navbar />
         <Flex 
-          direction="column" 
-          position="absolute"
-          left="5%" 
-          top="5%" 
-          alignItems="flex-start" // Align items to the left
-        >
-          <Box
-            bg="white"
-            h="0.05rem"
-            w="5.6rem"
-            mb="1rem"
-            position="absolute" // Make the line positioned absolutely
-             // Adjust the top and left positions to place the line over the text
-            left="0" 
-            marginLeft= "65%"
-            top= '40%'
-          />
-          <Text 
-            style={{
-              fontSize: "4em",
-              fontWeight: 700,  
-              color: "white",
-              letterSpacing: ".175em",
-              marginLeft: "64%",
-              marginTop: '39%',
-            }}
-          >
-         OVERVIEW
-          </Text>
-          <Text 
-            style={{
-              fontSize: "12.5em",
-              fontWeight: 700,  
-              background: `url(${backgroundImage})`,
-              marginTop: "-50%", // Move the '01' to the left of the text
-            }}
-          >
-            01
-          </Text>
-        </Flex>
-          
+  direction="column" 
+  position="absolute"
+  left="5%" 
+  top="10%" 
+  alignItems="flex-start" // Align items to the left
+>
+  <Flex direction="column">
+    <Box
+      bg="white"
+      h="0.05rem"
+      w="5.6rem"
+      mb="1rem"
+      position="absolute" // Make the line positioned absolutely
+      // Adjust the top and left positions to place the line over the text
+      left="0" 
+      marginLeft= "21.5%"
+      top= '31.5%'
+    />
+    <Text 
+      style={{
+        fontSize: "5em",
+        fontWeight: 700,  
+        color: "white",
+        letterSpacing: ".175em",
+        marginLeft: "21.5%",
+        marginTop: '7.5%',
+        width: '100%',
+      }}
+    >
+      OVERVIEW
+    </Text>
+    <Text 
+      style={{
+        fontSize: ".05em",
+        fontWeight: 500,  
+        color: "white",
+        letterSpacing: ".1em",
+        marginLeft: "21.5%",
+        marginTop: ".5%",
+        width: '30%',
+      }}
+    >
+      This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet.This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet.
+    </Text>
+
+    <Text 
+      style={{
+        fontSize: ".05em",
+        fontWeight: 500,  
+        color: "white",
+        letterSpacing: ".1em",
+        marginLeft: "21.5%",
+        marginTop: "1%",
+        width: '30%',
+      }}
+    >
+      This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. 
+    </Text>
+  </Flex>
+  <Text 
+    style={{
+      fontSize: "12.5em",
+      fontWeight: 700,  
+      background: `url(${backgroundImage})`,
+      marginTop: '-30%', // Adjust this value to make sure the '01' is in the correct place
+      
+    }}
+  >
+    01
+  </Text>
+</Flex>
+
     
             <Flex direction="column" flex="1">
               <Box style={fadeImageStyle} />
