@@ -24,22 +24,7 @@ const PlanetInfo = () => {
         height: '100vh', 
     };
 
-    const fadeImageStyle = useColorModeValue(
-        {
-            animation: 'fadein 6s',
-            keyframes: {
-                from: { opacity: 0, transform: 'scale(1.2)' },
-                to: { opacity: 1, transform: 'scale(1)' }
-            }
-        },
-        {
-            animation: 'fadein 6s',
-            keyframes: {
-                from: { opacity: 0, transform: 'scale(1.2)' },
-                to: { opacity: 1, transform: 'scale(1)' }
-            }
-        }
-    );
+   
 
     if (!planet) {
       return <div>Planet not found.</div>;
@@ -124,7 +109,7 @@ const PlanetInfo = () => {
 
     
             <Flex direction="column" flex="1">
-              <Box style={fadeImageStyle} />
+              
             </Flex>
             <Box 
               pos="relative"

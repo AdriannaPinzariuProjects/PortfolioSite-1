@@ -11,7 +11,8 @@ function Planet({ size, isSun = false, planetInfo, isSelected, setSelected, isEn
   
     const planetImage = planetInfo ? getImage(planetInfo.name) : null;
     // Update the zoomSize calculation to account for isEnterPressed
-    const zoomSize = isSelected ? (isEnterPressed ? `${size * 30}%` : `${size * 2}%`) : `${size}%`;
+    //const zoomSize = isSelected ? (isEnterPressed ? `${size * 30}%` : `${size * 2}%`) : `${size}%`;
+    const zoomSize = isSelected ? (isEnterPressed ? `${size * 2}%` : `${size * 2}%`) : `${size}%`;
   
     return (
       <VStack spacing="1em" align="center" onClick={() => setSelected(planetInfo.name)}>
