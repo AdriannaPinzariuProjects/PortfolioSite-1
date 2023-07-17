@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom'; 
 import { Box, Stack, useColorModeValue, Flex, Text } from '@chakra-ui/react';
 import AnimatedNumber from "animated-number-react";
+import './PlanetInfo.css'
 
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -49,11 +50,12 @@ const PlanetInfo = () => {
             <Flex direction="column" h="100vh" position="relative">
                 <Navbar />
                 <Text style={{
-      fontSize: "5em",
-      fontWeight: 700,
+      fontSize: "12.5em",
+      fontWeight: 700,  
+      position: "absolute",
       background: `url(${backgroundImage})`,
-      WebkitBackgroundClip: "text",
-      WebkitTextFillColor: "white"
+      marginLeft: "5%",
+      marginTop: "5%",
     }}>
     01
 </Text>
