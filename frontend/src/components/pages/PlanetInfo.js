@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; 
+import { useParams, useNavigate } from 'react-router-dom'; 
 import { Box, Stack, useColorModeValue, Flex, Text } from '@chakra-ui/react';
 import { useSpring } from '@react-spring/core';
 import { animated } from '@react-spring/web';
@@ -97,13 +97,17 @@ const PlanetInfo = () => {
         zIndex: 3
     }
 
+    // Navigation to the Next Page via Enter Keypress
+    const navigate = useNavigate();
+
     useEffect(() => {
         const handleKeyPress = (event) => {
-            // Change 'Enter' to whatever key you want to listen for
-            if (event.key === 'Enter') {
-                setNavigateToPlanetFeatures(true);
-            }
+          // Change 'Enter' to whatever key you want to listen for
+          if (event.key === 'Enter') {
+            navigate('/features'); // add the path to your PlanetFeatures page
+          }
         };
+    
 
         window.addEventListener('keydown', handleKeyPress);
 
