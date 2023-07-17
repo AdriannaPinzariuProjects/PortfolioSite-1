@@ -104,7 +104,7 @@ const PlanetInfo = () => {
         const handleKeyPress = (event) => {
           // Change 'Enter' to whatever key you want to listen for
           if (event.key === 'Enter') {
-            navigate('/features'); // add the path to your PlanetFeatures page
+            navigate(`/${planetName}/features`); 
           }
         };
     

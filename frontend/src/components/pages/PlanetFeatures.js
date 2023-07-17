@@ -1,12 +1,24 @@
-import React from 'react';
-import { Box, Stack, Text, Flex } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom'; 
+import { Box, Stack, useColorModeValue, Flex, Text } from '@chakra-ui/react';
+import { useSpring } from '@react-spring/core';
+import { animated } from '@react-spring/web';
 import AnimatedNumber from "animated-number-react";
+import { motion, AnimatePresence } from 'framer-motion';
+import { CSSTransition } from 'react-transition-group';
+import { zoomInAndOut } from './Animations';
+import './PlanetInfo.css'
+
+
+
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import planetDetails from './PlanetDetails';
-import backgroundImage from '../../Assets/testPlanet2.jpg'; // new background image for the features page
-import './PlanetInfo.css'
+import backgroundImage from '../../Assets/testPlanet2.jpg';
+import numberMask from '../../Assets/01.svg';
+import Overlay from './Overlay';
+import withFadeIn from './FadeIn';
+
 
 const MotionText = motion(Text);
 const MotionBox = motion(Box);
@@ -29,7 +41,36 @@ const animationVariants = {
 };
 
 const PlanetFeatures = () => {
-    const planet = planetDetails.find(p => p.name === 'Earth'); // Replace 'Earth' with the correct planet name
+
+    const { planetName } = useParams(); 
+    const planet = planetDetails.find(p => p.name === planetName);
+    const [navigateToPlanetFeatures, setNavigateToPlanetFeatures] = useState(false);
+    const [flip, set] = useState(false);
+    const props = useSpring({
+        to: { transform: 'scale(1)' },
+        from: { transform: 'scale(3)' },
+        reset: true,
+        reverse: flip,
+        delay: 200,
+        config: { tension: 2 },
+        onRest: () => set(!flip),
+    });
+    
+
+    // Overlay Fading In Transition 
+    const [opacity, setOpacity] = useState(1);
+
+    useEffect(() => {
+      const fadeEffect = setInterval(() => {
+        if (opacity > 0) {
+          setOpacity(prevOpacity => prevOpacity - 0.08);
+        }
+      }, 1.25);
+  
+      return () => clearInterval(fadeEffect);
+    }, [opacity]);
+  
+    
     const bgImage = {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
@@ -38,107 +79,171 @@ const PlanetFeatures = () => {
         position: 'absolute',
         width: '100%',
         zIndex: 1,
-    };
+      };
+      
+    // Gradient Overlay
     const gradientOverlay = {
-        background: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0,.9) 50%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 90%)',
+        background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0,.9) 50%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 90%)',
         height: '100vh',
         position: 'absolute',
         width: '100%',
         zIndex: 2
     };
+
+    // Content
     const contentStyle = {
         position: 'relative',
         zIndex: 3
-    };
+    }
+   
+
+    if (!planet) {
+      return <div>Planet not found.</div>;
+    }
 
     return (
         <Box style={{position: 'relative'}}>
-            <Box style={bgImage} className="zoom-out"></Box>
-            <Box style={gradientOverlay}></Box>
-            <Box style={contentStyle}>
-                <Navbar />
-                <Flex 
-                    direction="column" 
-                    position="relative"
-                    left="5%" 
-                    top="5%" 
-                    alignItems="flex-start"
-                >
-                    <Flex direction="column">
-                        <MotionBox
-                            bg="white"
-                            h="0.05rem"
-                            w="5.6rem"
-                            mb="1rem"
-                            variants={animationVariants}
-                            initial="initial"
-                            animate="animate"
-                            exit="exit"
-                        />
-                        <MotionText  
-                            style={{
-                                fontSize: "5em",
-                                fontWeight: 700,  
-                                color: "white",
-                                letterSpacing: ".175em",
-                                marginTop: '7.5%',
-                                width: '100%',
-                            }}
-                            variants={animationVariants}
-                            initial="initial"
-                            animate="animate"
-                            exit="exit"
-                        >
-                            FEATURES
-                        </MotionText>
-                        <Text 
-                            style={{
-                                fontSize: "12.5em",
-                                fontWeight: 700,  
-                                background: `url(${backgroundImage})`,
-                                marginTop: '-30%',
-                            }}
-                        >
-                            02
-                        </Text>
-                    </Flex>
-                    <MotionText 
-                        style={{
-                            fontSize: ".05em",
-                            fontWeight: 500,  
-                            color: "white",
-                            letterSpacing: ".1em",
-                            marginTop: "1%",
-                            width: '30%',
-                        }}
-                        variants={animationVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                    >
-                        This is a description of the planet's features. It provides some important information about the planet's features...
-                    </MotionText>
-                </Flex>
-                <Box 
-                    pos="relative"
-                    bg="black" 
-                    _after={{
-                        content: '""',
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0,.9) 50%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.3) 70%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 90%)`,
-                        zIndex: 1,
-                    }}
-                >
-                    {/* ... similar code for the AnimatedNumber components as in PlanetInfo */}
-                </Box> 
-                <Footer /> 
-            </Box>
-        </Box>
-    );
-};
+          <Box
+        style={{
+          position: 'absolute',
+          height: '110%', 
+          width: '160%', 
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transform: 'translate(-5%, -5%)', 
+          top: '10%',
+          left: '-30%',
+          zIndex: 1,
+        }}
+        className="zoom-out"
+      ></Box>
+          {/*<Box style={gradientOverlay}></Box>*/}
+          <Box style={contentStyle}>
+            <Overlay opacity={opacity} />
+            <Flex direction="column" h="100vh" position="relative">
+              <Navbar />
+              {/* Box under the Navbar */}
+              <Box 
+                pos="absolute"
+                bg="black" 
+                w="100%"
+                h="0.4rem"
+                top="60px"
+              />
+              <Text 
+                style={{
+                  fontSize: "11em",
+                  fontWeight: 700,  
+                  position: 'absolute',
+                  top: '3%',
+                  right: "14%",
+                  zIndex: 2,
+                }}
+              >
+                02
+              </Text>
+              {/* Black box under the "02" */}
+              <Box 
+                pos="absolute"
+                bg="black" 
+                w="100%"
+                h="14rem"
+                top="0%" 
+                
+              />
+              <Flex direction="column">
+                <AnimatePresence>
 
-export default PlanetFeatures;
+  <MotionBox
+  bg="white"
+  h="0.05rem"
+  w="5.6rem"
+  mb="1rem"
+  position="absolute"
+  left="0" 
+  marginLeft= "21.5%"
+  top= '31.5%'
+  variants={animationVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+/>
+<MotionText  
+  style={{
+    fontSize: "5em",
+    fontWeight: 700,  
+    color: "white",
+    letterSpacing: ".175em",
+    marginLeft: "21.5%",
+    marginTop: '7.5%',
+    width: '100%',
+    zIndex: "1",
+  }}
+  variants={animationVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+>
+  FEATURES
+</MotionText>
+    
+    <MotionText 
+  style={{
+    fontSize: ".05em",
+    fontWeight: 500,  
+    color: "white",
+    letterSpacing: ".1em",
+    marginLeft: "21.5%",
+    marginTop: ".5%",
+    width: '30%',
+  }}
+  variants={animationVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+>
+      This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet.This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet.
+      </MotionText>
+
+      <MotionText 
+  style={{
+    fontSize: ".05em",
+    fontWeight: 500,  
+    color: "white",
+    letterSpacing: ".1em",
+    marginLeft: "21.5%",
+    marginTop: "1%",
+    width: '30%',
+  }}
+  variants={animationVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+>
+      This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. 
+      </MotionText>
+      </AnimatePresence>
+  </Flex>
+
+
+
+    
+            <Flex flex="1">
+            </Flex>
+            <Box 
+                pos="absolute"
+                bg="black" 
+                w="100%"
+                h="6rem"
+                bottom="0%" 
+              />
+       
+            <Footer flex="0.1"/> 
+          </Flex>
+          </Box>
+        </Box>
+      );
+    };
+    
+    export default PlanetFeatures;

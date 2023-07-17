@@ -25,7 +25,7 @@ function RouteTransition() {
         <Route path="/hobby" element={<Hobby />} />
         <Route path="/location" element={<Location />} />
         <Route path="/:planetName/info" element={<PlanetInfo />} /> 
-        <Route path="/features" element={<PlanetFeatures />}  />
+        <Route path="/:planetName/features" element={<PlanetFeatures />}  />
       </Routes>
     </AnimatePresence>
   );
