@@ -16,7 +16,7 @@ const PlanetInfo = () => {
 
     
     const bgImage = {
-        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0,.9) 50%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.3) 70%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 90%), url(${backgroundImage})`,
+        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0,.9) 50%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 90%), url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         transition: 'all 1s ease-in-out',
