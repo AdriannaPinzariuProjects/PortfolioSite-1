@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom'; 
 import { Box, Stack, useColorModeValue, Flex, Text } from '@chakra-ui/react';
 import AnimatedNumber from "animated-number-react";
+import { CSSTransition } from 'react-transition-group';
 import './PlanetInfo.css'
 
 import Navbar from '../Navbar';
@@ -31,6 +32,7 @@ const PlanetInfo = () => {
     }
 
   return (
+    <CSSTransition in={true} appear={true} timeout={300} classNames="fade">
     <Box style={bgImage}>
       <Flex direction="column" h="100vh" position="relative">
         <Navbar />
@@ -156,6 +158,7 @@ const PlanetInfo = () => {
             <Footer flex="0.1"/>
           </Flex>
         </Box>
+        </CSSTransition>
       );
     };
     

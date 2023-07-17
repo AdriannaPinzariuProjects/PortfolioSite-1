@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Flex, Box } from '@chakra-ui/react';
+import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 
 import Navbar from '../Navbar';
@@ -9,8 +10,32 @@ import planetDetails from './PlanetDetails';
 import Planet from './Planet';
 import PlanetDescription from './PlanetDescription';
 
+const pageVariants = {
+  initial: {
+    opacity: 0,
+    x: "-100vw",
+    scale: 0.8
+  },
+  in: {
+    opacity: 1,
+    x: 0,
+    scale: 1
+  },
+  out: {
+    opacity: 0,
+    x: "100vw",
+    scale: 1.2
+  }
+};
+
+const pageTransition = {
+  type: "tween",
+  ease: "anticipate",
+  duration: 0.5
+};
 
 function Home() {
+  
     
     // Relative sizes of the planets (not to scale)
     const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
@@ -61,6 +86,13 @@ function Home() {
 
 
   return (
+    <motion.div 
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+    >
     <div>
       <style>
       
@@ -154,6 +186,7 @@ function Home() {
       <Footer />
     </div>
     </div>
+    </motion.div>
   );
 }
 
