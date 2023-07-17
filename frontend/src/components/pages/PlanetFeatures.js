@@ -128,9 +128,10 @@ const PlanetFeatures = () => {
                   fontSize: "10em",
                   fontWeight: 700,  
                   position: 'absolute',
-                  top: '4%',
+                  top: '4.5%',
                   right: "10.5%",
                   zIndex: 2,
+                  color: '#0246e3',
                 }}
               >
                 02
