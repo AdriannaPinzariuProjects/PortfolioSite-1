@@ -65,7 +65,7 @@ const PlanetFeatures = () => {
         if (opacity > 0) {
           setOpacity(prevOpacity => prevOpacity - 0.08);
         }
-      }, 1.25);
+      }, 2);
   
       return () => clearInterval(fadeEffect);
     }, [opacity]);
@@ -123,60 +123,51 @@ const PlanetFeatures = () => {
             <Overlay opacity={opacity} />
             <Flex direction="column" h="100vh" position="relative">
               <Navbar />
-              {/* Box under the Navbar */}
-              <Box 
-                pos="absolute"
-                bg="black" 
-                w="100%"
-                h="0.4rem"
-                top="60px"
-              />
               <Text 
                 style={{
-                  fontSize: "11em",
+                  fontSize: "10em",
                   fontWeight: 700,  
                   position: 'absolute',
-                  top: '3%',
-                  right: "14%",
+                  top: '4%',
+                  right: "10.5%",
                   zIndex: 2,
                 }}
               >
                 02
               </Text>
-              {/* Black box under the "02" */}
               <Box 
                 pos="absolute"
                 bg="black" 
                 w="100%"
-                h="14rem"
-                top="0%" 
-                
+                h="16.75rem"
+                top="0%"  
               />
               <Flex direction="column">
                 <AnimatePresence>
+                
 
   <MotionBox
   bg="white"
   h="0.05rem"
-  w="5.6rem"
+  w="5.65rem"
   mb="1rem"
   position="absolute"
   left="0" 
-  marginLeft= "21.5%"
-  top= '31.5%'
+  marginLeft= "65.61%"
+  top= '10.5%'
   variants={animationVariants}
   initial="initial"
   animate="animate"
   exit="exit"
 />
-<MotionText  
+<MotionText textAlign="right"
   style={{
-    fontSize: "5em",
+    fontSize: "4.5em",
     fontWeight: 700,  
     color: "white",
     letterSpacing: ".175em",
-    marginLeft: "21.5%",
-    marginTop: '7.5%',
+    marginLeft: "-27%",
+    marginTop: '.5%',
     width: '100%',
     zIndex: "1",
   }}
@@ -188,40 +179,24 @@ const PlanetFeatures = () => {
   FEATURES
 </MotionText>
     
-    <MotionText 
+    <MotionText textAlign="right"
   style={{
     fontSize: ".05em",
     fontWeight: 500,  
     color: "white",
     letterSpacing: ".1em",
-    marginLeft: "21.5%",
-    marginTop: ".5%",
-    width: '30%',
+    marginLeft: "44.5%",
+    marginTop: "-.25%",
+    width: '27.5%',
+    lineHeight: "1.5",
+    zIndex: "1",
   }}
   variants={animationVariants}
   initial="initial"
   animate="animate"
   exit="exit"
 >
-      This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet.This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet.
-      </MotionText>
-
-      <MotionText 
-  style={{
-    fontSize: ".05em",
-    fontWeight: 500,  
-    color: "white",
-    letterSpacing: ".1em",
-    marginLeft: "21.5%",
-    marginTop: "1%",
-    width: '30%',
-  }}
-  variants={animationVariants}
-  initial="initial"
-  animate="animate"
-  exit="exit"
->
-      This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. 
+      This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet.
       </MotionText>
       </AnimatePresence>
   </Flex>
