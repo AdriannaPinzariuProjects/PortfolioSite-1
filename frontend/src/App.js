@@ -10,6 +10,7 @@ import Experience from './components/pages/Experience.jsx';
 import Hobby from './components/pages/Hobby.jsx';
 import Location from './components/pages/Loaction.jsx';
 import PlanetInfo from './components/pages/PlanetInfo';
+import PlanetFeatures from './components/pages/PlanetFeatures';
 import 'odometer/themes/odometer-theme-default.css';
 import './Fonts.css';
 import './App.css'; 
@@ -24,6 +25,7 @@ function RouteTransition() {
         <Route path="/hobby" element={<Hobby />} />
         <Route path="/location" element={<Location />} />
         <Route path="/:planetName/info" element={<PlanetInfo />} /> 
+        <Route path="/features" element={<PlanetFeatures />}  />
       </Routes>
     </AnimatePresence>
   );
