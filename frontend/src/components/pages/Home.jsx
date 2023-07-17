@@ -10,6 +10,7 @@ import planetDetails from './PlanetDetails';
 import Planet from './Planet';
 import PlanetDescription from './PlanetDescription';
 
+
 const pageVariants = {
   initial: {
     opacity: 0,
@@ -71,7 +72,7 @@ function Home() {
         setIsEnterPressed(true);
         setTimeout(() => {
           navigate(`/${selectedPlanet}/info`);
-        }, 1500);
+        }, 1000);
       }
     }
   

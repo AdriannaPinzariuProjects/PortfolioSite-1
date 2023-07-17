@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; 
 import { Box, Stack, useColorModeValue, Flex, Text } from '@chakra-ui/react';
 import AnimatedNumber from "animated-number-react";
+import { motion, AnimatePresence } from 'framer-motion';
 import { CSSTransition } from 'react-transition-group';
 import './PlanetInfo.css'
 
@@ -14,6 +15,29 @@ import Overlay from './Overlay';
 import withFadeIn from './FadeIn';
 
 
+const MotionText = motion(Text);
+const MotionBox = motion(Box);
+
+const animationVariants = {
+    initial: {
+      opacity: 0,
+      y: -50,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 1, delay: .25 },
+    },
+    exit: {
+      opacity: 0,
+      y: 50,
+      transition: { duration: 1 },
+    },
+};
+
+  
+  
+
 const PlanetInfo = () => {
     const { planetName } = useParams(); 
     const planet = planetDetails.find(p => p.name === planetName);
@@ -24,7 +48,7 @@ const PlanetInfo = () => {
     useEffect(() => {
       const fadeEffect = setInterval(() => {
         if (opacity > 0) {
-          setOpacity(prevOpacity => prevOpacity - 0.04);
+          setOpacity(prevOpacity => prevOpacity - 0.08);
         }
       }, 1);
   
@@ -60,57 +84,75 @@ const PlanetInfo = () => {
   alignItems="flex-start" // Align items to the left
 >
   <Flex direction="column">
-    <Box
-      bg="white"
-      h="0.05rem"
-      w="5.6rem"
-      mb="1rem"
-      position="absolute" // Make the line positioned absolutely
-      // Adjust the top and left positions to place the line over the text
-      left="0" 
-      marginLeft= "21.5%"
-      top= '31.5%'
-    />
-    <Text 
-      style={{
-        fontSize: "5em",
-        fontWeight: 700,  
-        color: "white",
-        letterSpacing: ".175em",
-        marginLeft: "21.5%",
-        marginTop: '7.5%',
-        width: '100%',
-      }}
-    >
-      OVERVIEW
-    </Text>
-    <Text 
-      style={{
-        fontSize: ".05em",
-        fontWeight: 500,  
-        color: "white",
-        letterSpacing: ".1em",
-        marginLeft: "21.5%",
-        marginTop: ".5%",
-        width: '30%',
-      }}
-    >
+  <AnimatePresence>
+  <MotionBox
+  bg="white"
+  h="0.05rem"
+  w="5.6rem"
+  mb="1rem"
+  position="absolute"
+  left="0" 
+  marginLeft= "21.5%"
+  top= '31.5%'
+  variants={animationVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+/>
+<MotionText  
+  style={{
+    fontSize: "5em",
+    fontWeight: 700,  
+    color: "white",
+    letterSpacing: ".175em",
+    marginLeft: "21.5%",
+    marginTop: '7.5%',
+    width: '100%',
+  }}
+  variants={animationVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+>
+  OVERVIEW
+</MotionText>
+    
+    <MotionText 
+  style={{
+    fontSize: ".05em",
+    fontWeight: 500,  
+    color: "white",
+    letterSpacing: ".1em",
+    marginLeft: "21.5%",
+    marginTop: ".5%",
+    width: '30%',
+  }}
+  variants={animationVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+>
       This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet.This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet.
-    </Text>
+      </MotionText>
 
-    <Text 
-      style={{
-        fontSize: ".05em",
-        fontWeight: 500,  
-        color: "white",
-        letterSpacing: ".1em",
-        marginLeft: "21.5%",
-        marginTop: "1%",
-        width: '30%',
-      }}
-    >
+      <MotionText 
+  style={{
+    fontSize: ".05em",
+    fontWeight: 500,  
+    color: "white",
+    letterSpacing: ".1em",
+    marginLeft: "21.5%",
+    marginTop: "1%",
+    width: '30%',
+  }}
+  variants={animationVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+>
       This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. 
-    </Text>
+      </MotionText>
+      </AnimatePresence>
   </Flex>
   <Text 
     style={{
