@@ -105,7 +105,7 @@ const PlanetFeatures = () => {
             navigate('/home', {
               state: {
                   selectedPlanet: planetName,
-                  zoomLevel: 50 // Define your desired zoom level here
+                  //zoomLevel: 50 // Define your desired zoom level here
               }
             });
           }, 1000);  // timeout to match exit transition duration

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Flex, Box } from '@chakra-ui/react';
 import { motion } from "framer-motion";
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -10,7 +9,6 @@ import { moveRightAnimation, moveLeftAnimation, textFallAnimation, shrinkAndFade
 import planetDetails from './PlanetDetails';
 import Planet from './Planet';
 import PlanetDescription from './PlanetDescription';
-
 
 const pageVariants = {
   initial: {
@@ -37,19 +35,17 @@ const pageTransition = {
 };
 
 function HomeZoom() {
+  const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
+  const [selectedPlanet, setSelectedPlanet] = useState(null);
+  const [isEnterPressed, setIsEnterPressed] = useState(false);
   
+  const location = useLocation();
+  const { selectedPlanet: navigatedPlanet } = location.state || { selectedPlanet: null };
 
-// Relative sizes of the planets (not to scale)
-const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
+  useEffect(() => {
+    setSelectedPlanet(navigatedPlanet);
+  }, [navigatedPlanet]);
 
-const location = useLocation();
-const { selectedPlanet: initialSelectedPlanet, zoomLevel } = location.state || { selectedPlanet: null, zoomLevel: 1 };
-
-const [selectedPlanet, setSelectedPlanet] = useState(initialSelectedPlanet);
-const [isEnterPressed, setIsEnterPressed] = useState(false);
-
-      
-     // Image preloading
   useEffect(() => {
     planetDetails.forEach((planet) => {
       const img = new Image();
@@ -63,17 +59,15 @@ const [isEnterPressed, setIsEnterPressed] = useState(false);
     function handleKeyDown(e) {
       const currentIndex = planetDetails.findIndex(p => p.name === selectedPlanet);
       
-      // Check if left or right arrow was pressed
       if (e.key === "ArrowRight") {
         const nextIndex = (currentIndex + 1) % planetDetails.length;
         setSelectedPlanet(planetDetails[nextIndex].name);
-        setIsEnterPressed(false); // Reset the state when an arrow key is pressed
+        setIsEnterPressed(false);
       } else if (e.key === "ArrowLeft") {
         const prevIndex = (currentIndex - 1 + planetDetails.length) % planetDetails.length;
         setSelectedPlanet(planetDetails[prevIndex].name);
-        setIsEnterPressed(false); // Reset the state when an arrow key is pressed
+        setIsEnterPressed(false);
       } else if (e.key === "Enter") {
-        // Set isEnterPressed to true when Enter key is pressed
         setIsEnterPressed(true);
         setTimeout(() => {
           navigate(`/${selectedPlanet}/info`);
@@ -81,85 +75,72 @@ const [isEnterPressed, setIsEnterPressed] = useState(false);
       }
     }
   
-    // Add event listeners
     window.addEventListener("keydown", handleKeyDown);
   
-    // Remove the event listener on cleanup
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [selectedPlanet]);
 
-
   return (
-    
-    <div>
-      <style>
-      
-      </style>
-      <div
-        style={{
-          width: '100vw', 
-          height: '100vh', 
-          backgroundColor: 'black', 
-          display: 'flex', 
-          flexDirection: 'column',
-          animation: isEnterPressed ? 'fadeOut 1s ease-out forwards' : '',
-        }}
-      >
+    <div
+      style={{
+        width: '100vw', 
+        height: '100vh', 
+        backgroundColor: 'black', 
+        display: 'flex', 
+        flexDirection: 'column',
+        animation: isEnterPressed ? 'fadeOut 1s ease-out forwards' : '',
+      }}
+    >
       <Navbar />
       <Flex justify="space-between" align="center" flex="1" pt="5%" pb="5%" ml='4%' mr='10%' style={{ perspective: '1000px' }}>
         {planetDetails.map((planet, i) => {
           const selectedPlanetIndex = planetDetails.findIndex(p => p.name === selectedPlanet);
+          const moveDirection = i < selectedPlanetIndex ? moveLeftAnimation : moveRightAnimation;
+          let planetSize = planetSizes[i];
 
-          //const moveDirection = i < selectedPlanetIndex ? moveLeftAnimation : moveRightAnimation;
-          const moveDirection = i < selectedPlanetIndex ? moveLeftInwardAnimation : moveRightInwardAnimation;
-
-
-          // check if the current planet is the selected planet
           if (selectedPlanet === planet.name) {
+            planetSize *= 50;
             return (
               <Box
-        key={`planet-${i}`} // Fixed key for selected planet
-        as="div"
-        animation={isEnterPressed ? `${shrinkAndFade} 2s forwards` : ''}
-      >
+                key={`planet-${i}`}
+                as="div"
+                animation={isEnterPressed ? `${shrinkAndFade} 2s forwards` : ''}
+              >
                 <Planet 
-                size={planetSizes[i] * zoomLevel} // Multiply size by zoomLevel to increase size
+                  size={planetSizes[i]} 
+                  planetInfo={planet} 
+                  isSelected={selectedPlanet === planet.name} 
+                  setSelected={setSelectedPlanet} 
+                  isEnterPressed={isEnterPressed}
+                />
+              </Box>
+            )
+          }
+
+          return (
+            <Box
+              key={isEnterPressed ? i : `planet-${i}`}
+              as="div"
+              animation={isEnterPressed && i !== selectedPlanetIndex ? `${shrinkAndFade} 0.8s cubic-bezier(0.555, 0.05, 0.855, 0.06) forwards ${Math.abs(selectedPlanetIndex - i) * 0.1}s, ${moveDirection} 0.8s cubic-bezier(0.555, 0.05, 0.855, 0.06) forwards ${Math.abs(selectedPlanetIndex - i) * 0.1}s` : ''}
+              style={{ willChange: 'transform, opacity' }}
+            >
+              <Planet 
+                size={planetSize} 
                 planetInfo={planet} 
                 isSelected={selectedPlanet === planet.name} 
                 setSelected={setSelectedPlanet} 
                 isEnterPressed={isEnterPressed}
               />
-
-
-              </Box>
-            )
-          }
-          return (
-            <Box
-  key={isEnterPressed ? i : `planet-${i}`}
-  as="div"
-  animation={isEnterPressed && i !== selectedPlanetIndex ? `${shrinkAndFade} 0.8s cubic-bezier(0.555, 0.05, 0.855, 0.06) forwards ${Math.abs(selectedPlanetIndex - i) * 0.1}s, ${moveDirection} 0.8s cubic-bezier(0.555, 0.05, 0.855, 0.06) forwards ${Math.abs(selectedPlanetIndex - i) * 0.1}s` : ''}
-
-
-  style={{ willChange: 'transform, opacity' }}
->
-  <Planet 
-    size={planetSizes[i]} 
-    planetInfo={planet} 
-    isSelected={selectedPlanet === planet.name} 
-    setSelected={setSelectedPlanet} 
-  />
-  </Box>
+            </Box>
           )
         })}
       </Flex>
       <Box position="absolute" right="10%" top="50%" transform="translateY(-50%)">
         <Planet size={500} isSun />
       </Box>
-      
-      {/* NOTE: Temporarily Commenting Out For Later Use.
+       {/* NOTE: Temporarily Commenting Out For Later Use.
       
       <Box
   as="div"
@@ -182,12 +163,8 @@ const [isEnterPressed, setIsEnterPressed] = useState(false);
 {selectedPlanet && isEnterPressed && <PlanetDescription planet={planetDetails.find(planet => planet.name === selectedPlanet)} />}
 */}
 
-
-      
       <Footer />
     </div>
-    </div>
-
   );
 }
 
