@@ -99,13 +99,18 @@ const PlanetFeatures = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const handleKeyPress = (event) => {
-          if (event.key === 'Enter') {
-            setTimeout(() => {
-              navigate(`/home`);
-            }, 1000);  // timeout to match exit transition duration
-          }
-        };
+      const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+          setTimeout(() => {
+            navigate('/home', {
+              state: {
+                  selectedPlanet: planetName,
+                  zoomLevel: 50 // Define your desired zoom level here
+              }
+            });
+          }, 1000);  // timeout to match exit transition duration
+        }
+      };  
       
         window.addEventListener('keydown', handleKeyPress);
       

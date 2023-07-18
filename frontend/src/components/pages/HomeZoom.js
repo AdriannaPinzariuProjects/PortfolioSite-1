@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Flex, Box } from '@chakra-ui/react';
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -35,14 +36,18 @@ const pageTransition = {
   duration: 0.5
 };
 
-function Home() {
+function HomeZoom() {
   
-    
-    // Relative sizes of the planets (not to scale)
-    const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
 
-    const [selectedPlanet, setSelectedPlanet] = useState(null);
-    const [isEnterPressed, setIsEnterPressed] = useState(false);
+// Relative sizes of the planets (not to scale)
+const planetSizes = [40, 50, 55, 45, 70, 60, 50, 45, 40];
+
+const location = useLocation();
+const { selectedPlanet: initialSelectedPlanet, zoomLevel } = location.state || { selectedPlanet: null, zoomLevel: 1 };
+
+const [selectedPlanet, setSelectedPlanet] = useState(initialSelectedPlanet);
+const [isEnterPressed, setIsEnterPressed] = useState(false);
+
       
      // Image preloading
   useEffect(() => {
@@ -120,12 +125,13 @@ function Home() {
         animation={isEnterPressed ? `${shrinkAndFade} 2s forwards` : ''}
       >
                 <Planet 
-  size={planetSizes[i]} 
-  planetInfo={planet} 
-  isSelected={selectedPlanet === planet.name} 
-  setSelected={setSelectedPlanet} 
-  isEnterPressed={isEnterPressed}
-/>
+                size={planetSizes[i] * zoomLevel} // Multiply size by zoomLevel to increase size
+                planetInfo={planet} 
+                isSelected={selectedPlanet === planet.name} 
+                setSelected={setSelectedPlanet} 
+                isEnterPressed={isEnterPressed}
+              />
+
 
               </Box>
             )
@@ -185,4 +191,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomeZoom;
