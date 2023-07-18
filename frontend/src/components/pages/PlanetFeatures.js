@@ -95,6 +95,24 @@ const PlanetFeatures = () => {
         position: 'relative',
         zIndex: 3
     }
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleKeyPress = (event) => {
+          if (event.key === 'Enter') {
+            setTimeout(() => {
+              navigate(`/home`);
+            }, 1000);  // timeout to match exit transition duration
+          }
+        };
+      
+        window.addEventListener('keydown', handleKeyPress);
+      
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+      }, []);
    
 
     if (!planet) {

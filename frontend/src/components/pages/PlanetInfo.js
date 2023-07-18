@@ -24,7 +24,7 @@ import withFadeIn from './FadeIn';
 const MotionText = motion(Text);
 const MotionBox = motion(Box);
 
-const animationVariants = {
+/*const animationVariants = {
     initial: {
       opacity: 0,
       y: -50,
@@ -39,7 +39,20 @@ const animationVariants = {
       y: 50,
       transition: { duration: 1 },
     },
-};
+};*/
+
+const entranceVariants = {
+    initial: { opacity: 0, y: -50 },
+    animate: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.25 } },
+    exit: { opacity: 0, y: 50, transition: { duration: 1 } }
+  };
+  
+  const exitVariants = {
+    initial: { opacity: 1, y: 0 },
+    animate: { opacity: 1, y: 0, transition: { duration: 1 } },
+    exit: { opacity: 0, y: 200, transition: { duration: 1 } }  // animate to drop off the page
+  };
+  
 
 const PlanetInfo = () => {
 
@@ -98,23 +111,25 @@ const PlanetInfo = () => {
     }
 
     // Navigation to the Next Page via Enter Keypress
+    const [exiting, setExiting] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const handleKeyPress = (event) => {
-          // Change 'Enter' to whatever key you want to listen for
           if (event.key === 'Enter') {
-            navigate(`/${planetName}/features`); 
+            setExiting(true);
+            setTimeout(() => {
+              navigate(`/${planetName}/features`);
+            }, 1000);  // timeout to match exit transition duration
           }
         };
-    
-
+      
         window.addEventListener('keydown', handleKeyPress);
-
+      
         return () => {
             window.removeEventListener('keydown', handleKeyPress);
         };
-    }, []);
+      }, []);
 
     if (navigateToPlanetFeatures) {
         return <PlanetFeatures />;
@@ -143,57 +158,72 @@ const PlanetInfo = () => {
 >
   <Flex direction="column">
   <AnimatePresence>
+{ !exiting &&
   <MotionBox
-  bg="white"
-  h="0.05rem"
-  w="5.6rem"
-  mb="1rem"
-  position="absolute"
-  left="0" 
-  marginLeft= "21.5%"
-  top= '31.5%'
-  variants={animationVariants}
-  initial="initial"
-  animate="animate"
-  exit="exit"
-/>
-<MotionText  
-  style={{
-    fontSize: "5em",
-    fontWeight: 700,  
-    color: "white",
-    letterSpacing: ".175em",
-    marginLeft: "21.5%",
-    marginTop: '7.5%',
-    width: '100%',
-  }}
-  variants={animationVariants}
-  initial="initial"
-  animate="animate"
-  exit="exit"
->
-  OVERVIEW
-</MotionText>
-    
-    <MotionText 
-  style={{
-    fontSize: ".05em",
-    fontWeight: 500,  
-    color: "white",
-    letterSpacing: ".1em",
-    marginLeft: "21.5%",
-    marginTop: ".5%",
-    width: '30%',
-  }}
-  variants={animationVariants}
-  initial="initial"
-  animate="animate"
-  exit="exit"
->
+    bg="white"
+    h="0.05rem"
+    w="5.6rem"
+    mb="1rem"
+    position="absolute"
+    left="0" 
+    marginLeft= "21.5%"
+    top= '31.5%'
+    variants={exiting ? exitVariants : entranceVariants} 
+    initial="initial"
+    animate="animate"
+    exit="exit"
+  />
+}
+</AnimatePresence>
+
+<AnimatePresence>
+{ !exiting &&
+  <MotionText  
+    style={{
+      fontSize: "5em",
+      fontWeight: 700,  
+      color: "white",
+      letterSpacing: ".175em",
+      marginLeft: "21.5%",
+      marginTop: '7.5%',
+      width: '100%',
+    }}
+    variants={exiting ? exitVariants : entranceVariants} 
+    initial="initial"
+    animate="animate"
+    exit="exit"
+  >
+    OVERVIEW
+  </MotionText>
+}
+</AnimatePresence>
+
+
+<AnimatePresence>
+{ !exiting &&
+  <MotionText 
+    style={{
+      fontSize: ".05em",
+      fontWeight: 500,  
+      color: "white",
+      letterSpacing: ".1em",
+      marginLeft: "21.5%",
+      marginTop: "1%",
+      width: '30%',
+    }}
+    variants={exiting ? exitVariants : entranceVariants} 
+    initial="initial"
+    animate="animate"
+    exit="exit"
+  >
       This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet.This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. This is a description of the planet.
       </MotionText>
+}
+</AnimatePresence>
 
-      <MotionText 
+      <AnimatePresence>
+{ !exiting &&
+  <MotionText 
   style={{
     fontSize: ".05em",
     fontWeight: 500,  
@@ -203,15 +233,16 @@ const PlanetInfo = () => {
     marginTop: "1%",
     width: '30%',
   }}
-  variants={animationVariants}
+  variants={exiting ? exitVariants : entranceVariants} 
   initial="initial"
   animate="animate"
   exit="exit"
 >
       This is a description of the planet. It provides some important information about the planet. This is a description of the planet. It provides some important information about the planet. 
       </MotionText>
-      </AnimatePresence>
-  </Flex>
+                }
+              </AnimatePresence>
+            </Flex>
   <Text 
     style={{
       fontSize: "12.5em",
