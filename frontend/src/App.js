@@ -13,6 +13,7 @@ import Location from './components/pages/Loaction.jsx';
 import PlanetInfo from './components/pages/PlanetInfo';
 import PlanetFeatures from './components/pages/PlanetFeatures';
 import HomeZoom from './/components/pages/HomeZoom'
+import Game from './/components/pages/Game'
 import './Fonts.css';
 import './App.css'; 
 
@@ -20,7 +21,8 @@ function RouteTransition() {
   return (
     <AnimatePresence mode="wait">
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Game />} />
+        <Route path="/homeish" element={<HomePage />} />
         <Route path="/home" element={<HomeZoom />} />
         <Route path="/about" element={<AboutMe />} /> 
         <Route path="/experience" element={<Experience />} />
